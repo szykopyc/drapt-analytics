@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>Home</title>
+</head>
+<body>
+    <nav class="navigation_bar">
+        <img class="nav_logo" src="{{url_for('static',filename='NEFSIF_NAV_LOGO.png')}}" alt="">
+        <p class="nav_logo_text"><a id="nav_home" href="{{url_for('home')}}">DRAP-T</a></p>
+        <ul>
+            <li><a href="{{url_for('risk')}}">RISK</a></li>
+            <li><a href="{{url_for('performance')}}">PERF</a></li>
+            {% if admin==True %}
+            <li><a href="{{url_for('admin_panel')}}">ADMIN</a></li>
+            {% endif %}
+            <li><a href="{{url_for('profile')}}">PROFILE</a></li>
+            <li><a href="{{url_for('logout')}}">LOGOUT</a></li>
+        </ul>
+        
+    </nav>
+
+    <div class="main_container">
+        <div class="intro">
+            <h1>Welcome to <b>DRAP-T</b></h1>
+            <p>The unofficial dynamic risk analysis and performance tool used by the Nottingham Economics and Finance Society's Investment Fund (NEFSIF)</p>
+        </div>
+        
+        <div class="paragraph">
+            <h2 class="paragraph_title">Bloomberg</h2>
+            <div class="paragraph_body">
+                <p>The Bloomberg Terminal is a cutting-edge financial platform widely regarded as an essential tool for professionals in investment banking, 
+                    asset management, trading, and corporate finance. Offering unparalleled access to real-time market data, global news, and advanced analytics, 
+                    the Terminal empowers users to monitor financial markets, evaluate investment opportunities, and execute trades with precision. Beyond data aggregation, 
+                    it features powerful tools for portfolio management, risk assessment, and economic forecasting, as well as integrations for charting, modeling, and reporting. Its proprietary messaging system facilitates seamless communication across the global financial community, while its newsfeed provides up-to-the-minute coverage from Bloomberg’s renowned journalism team. Trusted for its reliability and depth, the Bloomberg Terminal is designed to provide users with a comprehensive edge in the fast-paced world of finance.</p>
+                <img class="paragraph_image" src="{{url_for('static',filename='PLACEHOLDER_IMAGE_1.jpg')}}" alt="">
+            </div>
+        </div>
+        <div class="paragraph">
+            <h2 class="paragraph_title">Switchblade</h2>
+            <div class="paragraph_body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel neque sapien. Aliquam erat volutpat. Praesent et velit quis orci ultricies volutpat. Donec laoreet euismod purus ac rhoncus. Duis mollis velit condimentum augue pulvinar, in varius nunc iaculis. Donec lectus neque, tincidunt non ipsum ut, rutrum auctor mi. Vestibulum eget eros eu leo viverra feugiat. In hac habitasse platea dictumst. Mauris vitae tempor nisi, vitae euismod arcu. In tristique magna at arcu tempor elementum. Mauris cursus feugiat imperdiet. Praesent a nulla ut mauris ultrices ultrices.
+    
+                    Proin vitae lorem gravida, pulvinar nisl at, imperdiet nunc. Suspendisse purus nulla, tempus vitae tincidunt eget, scelerisque vel odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa massa, consequat sed lacinia sed, ullamcorper nec nibh. Aenean accumsan aliquam ante nec dictum. Praesent id tellus non mauris convallis commodo id nec augue. In ligula urna, ornare id ante eget, hendrerit ultricies leo. Nam dapibus purus nunc, ut dapibus metus condimentum sit amet. Nam porta pulvinar elit, at condimentum nisi ultricies sagittis. Mauris ultrices velit quam, non tempor mauris scelerisque sed. In elit diam, pharetra id arcu quis, efficitur vestibulum arcu. Cras suscipit ex nec dignissim porttitor. Maecenas ultrices at tortor non volutpat.
+                    
+                    Aliquam ornare suscipit sem ut euismod. Sed mi magna, viverra non sagittis quis, commodo tincidunt velit. Duis nisi purus, fermentum sodales quam tempor, venenatis scelerisque massa. Praesent metus arcu, egestas a elit ac, tincidunt ultrices ligula. Nulla dapibus viverra scelerisque. Proin sit amet interdum massa, sit amet pulvinar purus. Nullam posuere eu justo non interdum. Mauris eleifend fermentum tempus. Etiam elementum aliquet nibh, vitae pretium lacus imperdiet eget. In facilisis sit amet odio eget tempor. Duis vel neque odio. Suspendisse non tellus quis velit viverra interdum eu sit amet tellus. Pellentesque eget maximus orci. Mauris urna lacus, convallis a nulla vitae, gravida dapibus ligula. Sed volutpat fringilla sollicitudin.</p>
+                <img class="paragraph_image" src="{{url_for('static',filename='PLACEHOLDER_IMAGE_1.jpg')}}" alt="">
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

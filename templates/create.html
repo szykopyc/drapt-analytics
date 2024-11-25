@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>Create Account | DRAP-T</title>
+</head>
+<body>
+    <nav class="navigation_bar">
+        <img class="nav_logo" src="{{url_for('static',filename='NEFSIF_NAV_LOGO.png')}}" alt="">
+        <p class="nav_logo_text">DRAP-T</p>
+    </nav>
+
+    <div class="main_container">
+        <div class="intro">
+            <h1>Welcome to <b>DRAP-T</b></h1>
+            <div id="intro_text">
+                <p>The unofficial Dynamic Risk Analysis and Performance Tool (DRAP-T) used by the Nottingham Economics and Finance Society's Investment Fund (NEFSIF)</p>
+            </div>
+            
+        </div>
+        <div class="over_login_container">
+            <div class="login_container">
+                <h2 id="login_text">Fill in the information below, or <a id="create_account_link" href="{{url_for('index')}}">log in</a></h2>
+                <form action="" method="post" autocomplete="off">
+                    <input class="input_box" type="text" placeholder="University username" name="username" value="{{
+                      request.form.username }}">
+                      <input class="input_box" type="text" placeholder="Full name" name="fname" value="{{
+                        request.form.fname }}">
+                     <input class="input_box" type="password" placeholder="Strong password" name="password" value="{{
+                      request.form.password }}">
+                      <input class="input_box" type="text" placeholder="Phone number, e.g. +44 1234567890" name="phoneNumber" value="{{
+                        request.form.phoneNumber }}">
+                    <select name="userGroup" class="input_group">
+                        <option value="" disabled selected>Select your team</option>
+                        <option value="industrials">Industrials</option>
+                        <option value="tmt">TMT</option>
+                        <option value="usc">US & Canada</option>
+                    </select>
+                    <input class="btn btn-default" type="submit" value="Submit">
+                  </form>  
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

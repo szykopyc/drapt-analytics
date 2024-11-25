@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(34, 57, 68);
+    color: white;
+    font-family: times-new-roman, Times, serif;
+}
+
+/* navigation bar */
+
+.navigation_bar {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
+    background-color: rgb(8, 20, 25);
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.7em;
+}
+.nav_logo {
+    vertical-align: middle;
+    width: 10em;
+    height: auto;
+    display: flex;
+}
+
+.nav_logo_text {
+    font-size: 2rem;
+    margin-left: 0.5em;
+    white-space: nowrap;
+}
+
+
+
+.main_container {
+    display: block;
+    padding: 2% 10%;
+}
+
+.intro h1 {
+    font-family: times-new-roman, Times, serif;
+    font-size: 3em;
+    font-weight: lighter;
+    color: white;
+    text-align: center;
+    padding-bottom: 0%;
+    
+}
+
+.intro p {
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.intro #intro_text {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login_container {
+    width: 100%;
+    padding: 3% 0%;
+}
+
+#create_account_link {
+    color: white;
+}
+
+.login_container form {
+    padding: 2% 0%;
+}
+
+.login_container input {
+    width: 100%;
+    padding: 3%;
+    margin: 0.5%;
+    border-radius: 1em;
+    border-color: rgb(8, 20, 25);;
+    border: none;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.login_container .input_group {
+    width: 100%;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+    color: rgb(117, 117, 117);
+    
+    border: none;
+    border-radius: 1em;
+    padding: 3%;
+    margin: 0.5%;
+}
+
+.login_container .btn{
+    color: rgb(117, 117, 117);
+}
+
+.login_container .btn:hover{
+    background-color: rgb(8, 20, 25);
+    color: white;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .navigation_bar {
+        justify-content: center; /* Center all content (logo and text) */
+    }
+
+    .nav_logo {
+        display: flex;
+        justify-content: center; /* Center the logo itself */
+    }
+
+    .nav_logo_text {
+        text-align: center; /* Ensure the logo text is also centered */
+        margin-left: 0; /* Remove left margin on mobile */
+    }
+
+    .intro h1 {
+        font-family: times-new-roman, Times, serif;
+        font-size: 2em;
+        font-weight: lighter;
+        color: white;
+        text-align: center;
+        padding-bottom: 0%;
+        
+    }
+    
+    .intro p {
+        text-align: center;
+        font-size: 1em;
+    }
+    
+    .intro #intro_text {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

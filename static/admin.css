@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(34, 57, 68);
+    color: white;
+    font-family: times-new-roman, Times, serif;
+}
+
+/* navigation bar */
+
+.navigation_bar {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(8, 20, 25);
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    padding: 0.7em;
+}
+.nav_logo {
+    vertical-align: middle;
+    width: 10em;
+    height: auto;
+    display: flex;
+}
+
+#nav_home {
+    display: inline;
+    text-decoration: none;
+    color: white;
+    white-space: nowrap;
+    font-size: 2rem;
+    padding: 0.3em;
+    margin-left: 0.5em;
+}
+
+.navigation_bar ul {
+    display: flex;
+    vertical-align: middle;
+    list-style-type: none;
+    gap: 0.5em;
+    margin-left: auto;
+}
+
+.navigation_bar li a {
+    display: inline;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.3em;
+}
+
+.navigation_bar li a:hover {
+    background-color: rgb(22, 57, 72);
+    border-radius: 5px;
+}
+
+/* main container */
+
+.main_container {
+    display: block;
+    padding: 2% 2%;
+}
+
+/* tables */
+
+.table_container {
+    width: 100%;
+}
+
+.container_following {
+    margin-top: 2em;
+}
+
+.table_title {
+    padding-bottom: 0.5em;
+    text-decoration: underline;
+}
+
+.table_terminate {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.table_terminate th {
+    color: rgb(22, 57, 72);
+
+    border: 1px solid white; 
+    padding: 0.4em; 
+    text-align: left; 
+    border-radius: 0px; 
+    background-color: white;
+}
+
+.table_terminate td {
+    border: 1px solid white; 
+    padding: 0.3em; 
+    text-align: left; 
+    border-radius: 0px; 
+}
+
+
+#userGroupAdminTD {
+    background-color: red;
+}
+
+.table_terminate_submit {
+    padding: 0px !important;
+}
+.table_terminate_submit form {
+    width: 50%; 
+    height: 50% ; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table_terminate_submit form button {
+    height: 100%;
+    width: 100%;
+    padding: 1px; 
+    font-family: monospace;
+    font-weight: bold;
+    background-color: rgb(8, 20, 25);
+    color: white;
+}
+
+.table_terminate_submit form button:hover {
+    height: 100%;
+    width: 100%;
+    padding: 1px; 
+    background-color: red;
+    color: white;
+}
+
+.terminated_flash {
+    text-align: center;
+    padding: 1em;
+    font-family: monospace;
+    font-weight: lighter;
+}
+
+.terminated_flash i {
+    text-align: center;
+    padding: 1em;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.login_container .input_box {
+    width: 14%;
+    padding: 0.5% 1%;
+
+    border-radius: 0.5em;
+    border-color: rgb(8, 20, 25);;
+    border: none;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.login_container .input_submit {
+    width: 10%;
+    padding: 0.5% 1%;
+
+    border-radius: 0.5em;
+    border-color: rgb(8, 20, 25);;
+    border: none;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+    color: black;
+
+}
+
+.input_submit:hover {
+    background-color: green;
+    color: white;
+}
+
+.input_perm_scope {
+    width: 15%;
+    padding: 0.5% 1%;
+
+    border-radius: 0.5em;
+    border-color: rgb(8, 20, 25);;
+    border: none;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+
+}
+
+.input_phone {
+    width: 15%;
+    padding: 0.5% 1%;
+
+    border-radius: 0.5em;
+    border-color: rgb(8, 20, 25);;
+    border: none;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+
+.login_container .input_group {
+    width: 14%;
+
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+    color: rgb(117, 117, 117);
+    
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.5% 1%;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .login_container .input_box {
+        width: 100%;
+        margin-bottom: 1%;
+    }
+
+    .input_perm_scope {
+        width: 100%;
+        margin-bottom: 1%;
+    }
+    .input_phone {
+        width: 100%;
+        margin-bottom: 1%;
+    }
+    .login_container .input_submit {
+        width: 100%;
+    }
+}

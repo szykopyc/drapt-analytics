@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <nav class="navigation_bar">
+        <img class="nav_logo" src="{{url_for('static',filename='NEFSIF_NAV_LOGO.png')}}" alt="">
+        <p class="nav_logo_text"><a id="nav_home" href="{{url_for('home')}}">DRAP-T</a></p>
+        <ul>
+            <li><a href="{{url_for('risk')}}">RISK</a></li>
+            <li><a href="{{url_for('performance')}}">PERF</a></li>
+            {% if session.get("adminLoggedIn") == True %}
+            <li><a href="{{url_for('admin_panel')}}">ADMIN</a></li>
+            {% endif %}
+            <li><a href="{{url_for('profile')}}">PROFILE</a></li>
+            <li><a href="{{url_for('logout')}}">LOGOUT</a></li>
+        </ul>    
+    </nav>
+    
+    <div class="main_container">
+        <div class="table_container">
+            <h2 class="table_title">Terminate active sessions</h2>
+            <table id="activeSessionTab" class="table_terminate">
+                <thead>
+                  <tr>
+                    <th>SID</th>
+                    <th>User</th>
+                    <th>Group</th>
+                    <th>Permission</th>
+                    <th>Login Time</th>
+                    <th>Terminate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for sid, data in active_sessions.items() %}
+                    <tr>
+                      <td>{{ sid }}</td>
+                      <td>{{ data["username"] }}</td>
+                      <td>{{ data["userGroup"] }}</td>
+                      <td id="{% if data['permission_scope']=='4' %}userGroupAdminTD{% endif %}">{{ data["permission_scope"]}}</td>
+                      <td>{{ data["login_time"] }}</td>
+                      <td class="table_terminate_submit">
+                        {% if data["permission_scope"] !="4" %}
+                        <form action="{{url_for('terminate_session')}}" method="post">
+                            <input type="hidden" name="sid" value="{{ sid }}">
+                            <button type="submit">X</button>
+                        </form>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <h3 class="terminated_flash">Session for<i>{{message}}</i>has been terminated</h3>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        
+        <div class="login_container container_following">
+          <h2 class="table_title">Create user</h2>
+          <form action="{{url_for('create_user')}}" method="post" autocomplete="off">
+            <input class="input_box" type="text" placeholder="Username" name="username" value="{{request.form.username }}">
+            <input class="input_box" type="text" placeholder="Full name" name="fname" value="{{request.form.fname }}">
+            <input class="input_box" type="password" placeholder="Password" name="password" value="{{request.form.password }}">
+            <input class="input_box" type="text" placeholder="Team" name="team" value="{{request.form.team }}">
+            <select name="permission_scope" class="input_perm_scope">
+              <option disabled selected>Permission scope</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              {% if userScope == "4" %}
+              <option value="3">3</option>
+              <option value="4">4</option>
+              {% endif %}
+            </select>
+            <input class="input_phone" type="text" placeholder="Phone number +XX 1234567890" name="phone_number" value="{{request.form.phone_number}}">
+            <input class="input_submit" type="submit" value="Submit">
+          </form>  
+        </div>
+        
+
+        <div class="container_following">
+            <h2 class="table_title">List of users</h2>
+            <table id="activeSessionTab" class="table_terminate">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Full Name</th>
+                    <th>Group</th>
+                    <th>Permission</th>
+                    <th>Phone Number</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in userCreds %}
+                    <tr>
+                      <td>{{ user[0] }}</td>
+                      <td>{{ user[1] }}</td>
+                      <td>{{ user[2] }}</td>
+                      <td id="{% if user[3]=='4' %}userGroupAdminTD{% endif %}">{{user[3]}}</td>
+                      <td>{{ user[4] }}</td>
+                      <td class="table_terminate_submit">
+                        {% if userScope == "4" %}
+                        <form action="{{url_for('delete_user')}}" method="post">
+                            <input type="hidden" name="username" value="{{ user[0] }}">
+                            <button type="submit">X</button>
+                        </form>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
