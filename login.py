@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 def checkCredentials(username, password, team):
     try:
-        with sqlite3.connect('details.db') as conn:
+        with sqlite3.connect('databases/details.db') as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT Username, Password, Team, PermissionScope FROM loginCreds WHERE Username =?', (username,))
             row = cursor.fetchone()
@@ -27,7 +27,7 @@ def checkCredentials(username, password, team):
 
 def fetchAllCreds():
     try:
-        with sqlite3.connect('details.db') as conn:
+        with sqlite3.connect('databases/details.db') as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT Username, FullName, Team, PermissionScope, PhoneNumber  FROM loginCreds')
             row = cursor.fetchall()
@@ -42,7 +42,7 @@ def fetchAllCreds():
     return row
 
 def create_table():
-    conn = sqlite3.connect("details.db")
+    conn = sqlite3.connect("databases/details.db")
     cursor = conn.cursor()
     query = "DROP TABLE IF EXISTS loginCreds"
     cursor.execute(query)
@@ -54,7 +54,7 @@ def create_table():
 
 def enter(username, fname ,password, team, phoneNumber, permissionScope):
     if username and password and team and phoneNumber and permissionScope:
-        conn = sqlite3.connect("details.db")
+        conn = sqlite3.connect("databases/details.db")
         cursor = conn.cursor()
 
         # Ensure password is hashed using bcrypt
@@ -70,7 +70,7 @@ def enter(username, fname ,password, team, phoneNumber, permissionScope):
 
 def deleteUser(username):
     try:
-        with sqlite3.connect('details.db') as conn:
+        with sqlite3.connect('databases/details.db') as conn:
             cursor = conn.cursor()
             cursor.execute('DELETE FROM loginCreds WHERE Username = ?',(username,))
             conn.commit()
