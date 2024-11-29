@@ -95,17 +95,17 @@ def index():
 
     # Display verification numbers
     verification_list = [verification_worded_number, verification_second_number]
-    return render_template("index.html", verification_list=verification_list)
+    return render_template("index.html", verification_list=verification_list, current_time=time.time())
 
 
 @app.route("/home")
 def home():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True)
+            return render_template("home.html",admin=True, current_time=time.time())
         
         else:
-            return render_template("home.html",admin=False)
+            return render_template("home.html",admin=False, current_time=time.time())
     
     else:
         session.clear()
@@ -115,10 +115,10 @@ def home():
 def risk():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True)
+            return render_template("home.html",admin=True, current_time=time.time())
         
         else:
-            return render_template("home.html",admin=False)
+            return render_template("home.html",admin=False, current_time=time.time())
     
     else:
         session.clear()
@@ -128,10 +128,10 @@ def risk():
 def performance():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True)
+            return render_template("home.html",admin=True, current_time=time.time())
         
         else:
-            return render_template("home.html",admin=False)
+            return render_template("home.html",admin=False, current_time=time.time())
     
     else:
         session.clear()
@@ -141,10 +141,10 @@ def performance():
 def profile():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True)
+            return render_template("home.html",admin=True, current_time=time.time())
         
         else:
-            return render_template("home.html",admin=False)
+            return render_template("home.html",admin=False, current_time=time.time())
     
     else:
         session.clear()
@@ -160,7 +160,7 @@ def admin_panel():
             userCreds = fetchAllCreds()
             userScope = session.get("userPermissionScope")
 
-            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds)
+            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds, current_time=time.time())
         
         else:
             session.clear()
@@ -249,7 +249,7 @@ def create():
         return redirect(url_for("index"))
 
     session["logged_in"] = False
-    return render_template("create.html")
+    return render_template("create.html", current_time=time.time())
 
 @app.route("/logout")
 def logout():

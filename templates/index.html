@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}"">
     <title>Login | DRAP-T</title>
     <style>
         .main-flex-container {
@@ -44,7 +44,7 @@
 
                 {% endif %}
             {% endwith %}
-            <form action="" method="post" autocomplete="off">
+            <form action="" method="post" autocomplete="on">
                 <input class="input_box" type="text" placeholder="Username" name="username" value="{{
                     request.form.username }}">
                    <input class="input_box" type="password" placeholder="Password" name="password" value="{{
@@ -57,7 +57,7 @@
                       <option value="other">Other</option>
                   </select>
                   <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[1]}}?" name="verification" value="{{
-                      request.form.username }}">
+                      request.form.username }}" autocomplete="off">
                   <input class="input-button" type="submit" value="Login">
             </form>  
         </div>
