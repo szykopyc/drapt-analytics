@@ -1,0 +1,371 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Body and HTML */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scrolling */
+    /* background-color: #2c2c2c; */
+    background-color: #4a4a4a;
+
+}
+
+/* this is the header/nav section */
+
+header nav {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c2c2c;;
+
+    color: white;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    padding: 15px 25px;
+}
+
+.nav-logo {
+    flex-shrink: 0;
+    width: 150px;
+    height: 100%;
+}
+
+.nav-text {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: normal;
+    font-size: 2em;
+    overflow: hidden;
+    text-wrap: nowrap;
+}
+
+.nav-text a {
+    text-decoration: none;
+    color: white;
+}
+
+/* header nav links */
+header nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    list-style: none;
+}
+
+header nav li a {
+    display: inline;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
+
+header nav li a:hover {
+    background-color: #4682b4;
+}
+
+/* main flex container  */
+
+.main-flex-container {
+    background: #1e1e1e;
+    min-height: 0vh;
+    padding-top: 100px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    padding-bottom: 30px;
+}
+
+/* element container initialisation */
+
+.element-container {
+    width: 80%;
+    padding: 20px;
+    background-color: #2c2c2c;
+    border: 5px #4a4a4a solid;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 5px 5px #3e3e3e;
+
+    overflow: visible;
+}
+
+/* this code animates the border of an element container */
+
+.moving-rgb-border{
+    border: 5px solid transparent; /* Border will be animated with RGB glow */
+    box-shadow: none;
+    animation: rgbGlow 2s infinite alternate;
+}
+
+@keyframes rgbGlow {
+    0% {
+        border-color: red;
+    }
+    25% {
+        border-color: yellow;
+    }
+    50% {
+        border-color: green;
+    }
+    75% {
+        border-color: cyan;
+    }
+    100% {
+        border-color: blue;
+    }
+}
+
+.rgb-button-default {
+    background-color: #2c2c2c;
+    padding: 10px;
+    color: white;
+    border: 1px white solid;
+    border-radius: 10%;
+    height: 37px;
+    width: 60px;
+    text-align: center;
+    margin-left: auto;
+}
+
+.rgb-button-toggle {
+    background-image: linear-gradient(to right, red, violet);
+    border: 1px white solid;
+}
+
+/* this modifies the content of the element container */
+
+#intro-container {
+    text-align: center;
+    text-decoration: none;
+}
+
+.element-container p {
+    width: 90%;
+}
+
+.element-container h1,h2{
+    width: 90%;
+    font-family: monospace;
+    text-decoration: underline;
+}
+
+.element-container a{
+    color: white;
+}
+
+/* this modifies the form of an element container */
+
+.element-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 80%;
+}
+
+.element-container form input, select {
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: white;
+    font-family: monospace;
+}
+
+.element-container form .input-button:hover {
+    background-color: #4682b4;
+    color: white;
+}
+
+/* this code is specifically for the content inside the element containers */
+.element {
+    background-color: #4a4a4a;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    gap: 15px;
+
+    padding: 20px;
+    border: 5px #1e1e1e solid;
+    border-radius: 5px;
+
+    color: white;
+}
+
+.element-image {
+    background-color: #4a4a4a;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    gap: 15px;
+
+    padding: 20px;
+    border: 5px #1e1e1e solid;
+    border-radius: 5px;
+
+    color: white;
+}
+
+.element-image img {
+    width: 50%;
+    height: 100%;
+    aspect-ratio: 3/2;
+    object-fit: contain;
+}
+
+.element-paragraph-container-column {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.element-paragraph-container-column p {
+    text-align: justify;
+    width: 100%;
+}
+
+@media (max-width: 1200px){
+    .element-image{
+        flex-direction: column;
+    }
+
+    #image-right {
+        flex-direction: column-reverse;
+    }
+
+    .element-image img {
+        width: 100%;
+        height: 50%;
+        object-fit: contain;
+    }
+}
+
+/* clickable grid for links */
+.element-clickable-grid {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns of equal width */
+    grid-gap: 10px; /* Space between items */
+    justify-items: center; /* Center each item horizontally */
+    align-items: center; /* Center each item vertically */
+}
+
+/* Grid item style */
+.element-clickable-grid-item {
+    width: 100%; /* Ensure the width is 100% of the grid cell */
+    aspect-ratio: 1; /* Makes the height equal to the width, maintaining a square aspect ratio */
+    background-color: white; /* Example background color */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: black;
+}
+
+.element-clickable-grid-item a {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;     
+    width: 100%;       
+    height: 100%;        
+    text-decoration: none; 
+    color: inherit;      
+}
+
+.element-clickable-grid-item img {
+    width: 70%;
+    height: auto;
+    max-height: 80%;
+    filter: blur(0.2em);
+    transition: filter 500ms linear;
+}
+
+.element-clickable-grid-item a:hover img{
+    filter: blur(0em);
+}
+
+
+
+/* sponsors list */
+
+.sponsor-img-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Dynamic columns */
+    grid-auto-rows: 100px; /* Uniform height for rows */
+    gap: 10px; /* Space between images */
+    justify-items: center; /* Center each image horizontally in its grid cell */
+    align-items: center; /* Center each image vertically in its grid cell */
+    background-color: white;
+}
+
+.sponsor-img-list img {
+    width: 100%; /* Fill the grid cell */
+    height: 100%; /* Fill the grid cell */
+    object-fit: contain; /* Ensure the entire logo fits without distortion */
+    padding: 5px; /* Optional: Add padding inside each grid cell */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    background: white; /* Optional: Highlight transparent images */
+}
+
+/* FOOTER */
+footer {
+    padding: 10px;
+    background-color: #2c2c2c;
+    color: darkgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+}
+
+/* media queries */
+@media (max-width: 715px) {
+    header nav, .rgb-button-default, .rgb-button-toggle {
+        justify-content: center;
+    }
+    header nav ul, .rgb-button-default, .rgb-button-toggle{
+        margin: 0;
+    }
+    
+    .main-flex-container {
+        padding-top: 138px;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .element-clickable-grid {
+        grid-template-columns: 1fr; /* 2 columns for medium screens */
+    }
+
+    .element-clickable-grid-item img {
+        filter: blur(0);
+    }
+}

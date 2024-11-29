@@ -5,9 +5,9 @@ Created on Sat Nov 23 17:27:47 2024
 
 @author: szymonkopycinski
 """
-from flask import Flask, render_template, request, session, redirect, url_for, flash # type: ignore
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify # type: ignore
 from random import choice, randint
-from login import checkCredentials, enter, fetchAllCreds, deleteUser
+from databaseManager import checkCredentials, enter, fetchAllCreds, deleteUser
 import os
 from datetime import timedelta, datetime
 import time
@@ -16,10 +16,12 @@ import uuid
 
 app = Flask(__name__)
 
-app.secret_key = os.environ.get('SECRET_KEY')
+
+#app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = 'abcCHANGEME'
 
 app.config.update(
-    SESSION_COOKIE_SECURE=True,  # Send cookies only over HTTPS
+    SESSION_COOKIE_SECURE=False,  # Send cookies only over HTTPS
     SESSION_COOKIE_HTTPONLY=True,  # Prevent JavaScript access to cookies
     SESSION_COOKIE_SAMESITE='Lax',  # Protect against CSRF in some scenarios
     PERMANENT_SESSION_LIFETIME=timedelta(minutes=60),  # Auto-expire sessions
@@ -42,54 +44,59 @@ def index():
         verification_input = request.form.get("verification")
 
         # Retrieve stored session values
-        correct_sum = session.get("verification_value_worded_number", 0) + session.get("verification_second_number", 0)
+        verification_value_worded_number = session.get("verification_value_worded_number", 0)
+        verification_second_number = session.get("verification_second_number", 0)
+        correct_sum = verification_value_worded_number + verification_second_number
 
-        if verification_input.isdigit() and int(verification_input) == correct_sum:
-            # Verification successful
-            session.clear()  # Clear session to avoid stale data
-            verification= True
-
+        if verification_input and verification_input.isdigit() and int(verification_input) == correct_sum:
+            verification = True
         else:
             verification=False
+            session.clear()
+            session.modified = True  # Reset session on failure
 
-        checkCredentialsQuery = checkCredentials(username,password,userGroup)
+        # Validate user credentials
+        checkCredentialsQuery = checkCredentials(username, password, userGroup)
 
         if checkCredentialsQuery[0] and verification:
             session["logged_in"] = True
-            if userGroup == "other":
-                if int(checkCredentialsQuery[1])>2:
-                    session["adminLoggedIn"] = True
-                session["userPermissionScope"] = checkCredentialsQuery[1]
+            session["userPermissionScope"] = checkCredentialsQuery[1]
+            session.modified = True
+            if userGroup == "other" and int(checkCredentialsQuery[1]) > 2:
+                session["adminLoggedIn"] = True
+                session.modified = True
 
             if "sid" not in session:
                 session["sid"] = str(uuid.uuid4())
+                session.modified = True
 
             active_sessions[session["sid"]] = {
-                "username" : username,
-                "userGroup" : userGroup,
-                "login_time" : datetime.now().strftime('%d/%m %H:%M:%S'),
-                "permission_scope" : checkCredentialsQuery[1]
+                "username": username,
+                "userGroup": userGroup,
+                "login_time": datetime.now().strftime('%d/%m %H:%M:%S'),
+                "permission_scope": checkCredentialsQuery[1]
             }
 
             return redirect(url_for("home"))
-        
         else:
             flash("Log in failed, please try again")
-            session.clear()
             return redirect(url_for("index"))
 
-    # Generate a new question on GET requests or after redirect
+    # For GET requests, generate a new verification question
     verification_worded_number = choice(login_verification_list_of_worded_numbers)
     verification_value_worded_number = login_verification_list_of_worded_numbers.index(verification_worded_number) + 1
     verification_second_number = randint(1, 10)
 
-    # Store question in session
+    # Store verification values in the session
     session["verification_value_worded_number"] = verification_value_worded_number
     session["verification_second_number"] = verification_second_number
     session["logged_in"] = False
+    session.modified = True
 
-    verification_list = [verification_worded_number, verification_value_worded_number, verification_second_number]
+    # Display verification numbers
+    verification_list = [verification_worded_number, verification_second_number]
     return render_template("index.html", verification_list=verification_list)
+
 
 @app.route("/home")
 def home():
@@ -178,6 +185,10 @@ def add_cache_control(response):
     if not session.get("logged_in") and sid in active_sessions:
         active_sessions.pop(sid, None)  # Remove the user from active_sessions if their session is cleared
 
+    if 'image' in response.content_type:
+        response.headers["Cache-Control"] = "public, max-age=86400"  # Cache for 1 day
+        response.headers["Expires"] = (datetime.utcnow() + timedelta(days=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+
     return response
 
 @app.route("/terminate_session", methods=['POST'])
@@ -261,6 +272,8 @@ def active_session_cleanup():
 
         time.sleep(120) 
 
+'''
 cleanup_thread = threading.Thread(target=active_session_cleanup)
 cleanup_thread.daemon = True
 cleanup_thread.start()
+'''

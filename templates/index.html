@@ -3,54 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <title>Login | DRAP-T</title>
+    <style>
+        .main-flex-container {
+            padding-top: 100px;
+        }
+        @media (max-width: 415px) {
+            .main-flex-container{
+                padding-top: 156px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navigation_bar">
-        <img class="nav_logo" src="{{url_for('static',filename='NEFSIF_NAV_LOGO.png')}}" alt="">
-        <p class="nav_logo_text">DRAP-T</p>
-    </nav>
-
-    <div class="main_container">
-        <div class="intro">
-            <h1>Welcome to <b>DRAP-T</b></h1>
-            <div id="intro_text">
-                <p>The unofficial Dynamic Risk Analysis and Performance Tool (DRAP-T) used by the Nottingham Economics and Finance Society's Investment Fund (NEFSIF)</p>
-            </div>
-            
+    <header>
+        <nav>
+            <img class="nav-logo" src="{{url_for('static',filename='images/NEFSIF_NAV_LOGO.png')}}" alt="">
+            <p class="nav-text">DRAP-T</p>
+            <button onclick="toggleRGBBorder()" class="rgb-button-default rgb-button-toggle" id="rgb-button-toggle">RGB</button>
+            <script src="{{url_for('static',filename='js/toggle.js')}}"></script>
+        </nav>
+    </header>
+    <div class="main-flex-container">
+        <div class="element-container" id="element-container">
+            <h1>Welcome to DRAP-T</h1>
+            <p>The unofficial Dynamic Risk Analysis and Performance Tool used by the Nottingham Economics and Finance Society's <b>Investment Fund</b></p>
         </div>
-        <div class="over_login_container">
-            <div class="login_container">
-                <h2 id="login_text">Please log in, or <a id="create_account_link" href="{{url_for('create')}}">create an account</a></h2>
-                {% with messages = get_flashed_messages(with_categories=true) %}
+        <div class="element-container">
+            <h2>What is DRAP-T?</h2>
+            <p><b>DRAP-T</b> provides dynamic risk analysis feedback for any set of assets provided, along with the option to analyse its performance compared to any benchmark.</p>
+        </div>
+        <div class="element-container">
+            <h2 id="login_text">Please log in, or <a id="create_account_link" href="{{url_for('create')}}">create an account</a></h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
                         {% for category, message in messages %}
-                            <h3 class="login_error">{{message}}</h3>
-                        {% endfor %}
+                            <p>{{message}}</p>
+                    {% endfor %}
 
-                    {% endif %}
-                {% endwith %}
-                <form action="" method="post" autocomplete="off">
-                    <input class="input_box" type="text" placeholder="Username" name="username" value="{{
+                {% endif %}
+            {% endwith %}
+            <form action="" method="post" autocomplete="off">
+                <input class="input_box" type="text" placeholder="Username" name="username" value="{{
+                    request.form.username }}">
+                   <input class="input_box" type="password" placeholder="Password" name="password" value="{{
+                    request.form.password }}">
+                  <select name="userGroup" class="input_group">
+                      <option value="" disabled selected>Select your team</option>
+                      <option value="industrials">Industrials</option>
+                      <option value="tmt">TMT</option>
+                      <option value="usc">US & Canada</option>
+                      <option value="other">Other</option>
+                  </select>
+                  <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[1]}}?" name="verification" value="{{
                       request.form.username }}">
-                     <input class="input_box" type="password" placeholder="Password" name="password" value="{{
-                      request.form.password }}">
-                    <select name="userGroup" class="input_group">
-                        <option value="" disabled selected>Select your team</option>
-                        <option value="industrials">Industrials</option>
-                        <option value="tmt">TMT</option>
-                        <option value="usc">US & Canada</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[2]}}?" name="verification" value="{{
-                        request.form.username }}">
-                    <input class="btn btn-default" type="submit" value="Login">
-                  </form>  
+                  <input class="input-button" type="submit" value="Login">
+            </form>  
+        </div>
+        <div class="element-container">
+            <h2>Sponsors</h2>
+            <div class="sponsor-img-list">
+                <img src="{{ url_for('static',filename='images/AXP.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/BP.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/COMPASS.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/DB.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/GS.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/LAZARD.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/MAZARS.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/NEWTON.avif')}}" alt="">
+                <img src="{{ url_for('static',filename='images/PKF.avif')}}" alt="">
             </div>
         </div>
     </div>
-    
-
+    <footer>
+        <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>
+    </footer>
 </body>
 </html>
