@@ -30,7 +30,6 @@ header nav {
 
     color: white;
 
-    display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
@@ -265,6 +264,84 @@ header nav li a:hover {
     }
 }
 
+/* element form styling within elements */
+.element-form {
+    background-color: #4a4a4a;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    gap: 15px;
+
+    padding: 20px;
+    border: 5px #1e1e1e solid;
+    border-radius: 5px;
+
+    color: white;
+}
+
+.element-form form{
+    width: 100%;
+}
+
+.element-form .input-button:hover {
+    background-color: #4682b4;
+    color: white;
+}
+
+/* table styling within elements */
+
+.element-table {
+    border-spacing: 0;
+    background-color: #4a4a4a;
+    width: 90%;
+
+    padding: 20px;
+    border: 5px #1e1e1e solid;
+    border-radius: 5px;
+
+    color: white;
+
+    overflow: scroll;
+}
+
+.element-table th {
+    border: 1px solid white;
+    padding: 0.4em;
+    background-color: white;
+    text-align: left;
+    color: #1e1e1e;
+    border-radius: 0px;
+}
+
+.element-table td {
+    border: 1px solid white;
+    padding: 0.3em;
+    text-align: left;
+    border-radius: 0px;
+}
+
+#userGroupAdminTD {
+    background-color: red;
+}
+
+.element-table-delete {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.element-table-delete form {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.element-table-delete form button:hover{
+    background-color: red;
+}
+
 /* clickable grid for links */
 .element-clickable-grid {
     width: 90%;
@@ -344,6 +421,8 @@ footer {
     font-family: monospace;
 }
 
+/* site specific modifications */
+
 /* media queries */
 @media (max-width: 715px) {
     header nav, .rgb-button-default, .rgb-button-toggle {
@@ -361,6 +440,22 @@ footer {
 
 
 @media (max-width: 768px) {
+    #admin-element-container {
+        width: 80%;
+        padding: 20px;
+        background-color: #2c2c2c;
+        border: 5px #4a4a4a solid;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        box-shadow: 0 5px 5px #3e3e3e;
+
+        overflow-x: scroll;
+    }
+
     .element-clickable-grid {
         grid-template-columns: 1fr; /* 2 columns for medium screens */
     }

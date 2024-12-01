@@ -160,7 +160,7 @@ def admin_panel():
             userCreds = fetchAllCreds()
             userScope = session.get("userPermissionScope")
 
-            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds, current_time=time.time())
+            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds, current_time=time.time(), admin=True)
         
         else:
             session.clear()

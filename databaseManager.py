@@ -53,7 +53,11 @@ def create_table():
     conn.commit()
 
 def enter(username, fname ,password, team, phoneNumber, permissionScope):
-    if username and password and team and phoneNumber and permissionScope:
+    # username and password integrity checker
+    if username and fname and password and team and phoneNumber and permissionScope:
+        if " " in username or " " in password:
+            return False
+        
         conn = sqlite3.connect("databases/details.db")
         cursor = conn.cursor()
 
@@ -61,9 +65,12 @@ def enter(username, fname ,password, team, phoneNumber, permissionScope):
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         # Using parameterized query to prevent SQL injection
-        query = "INSERT INTO loginCreds (Username, FullName, Password, Team, PhoneNumber, PermissionScope) VALUES (?, ?, ?, ?, ?, ?)"
-        cursor.execute(query, (username, fname, hashed_password, team, phoneNumber, permissionScope))
-        conn.commit()
+        try:
+            query = "INSERT INTO loginCreds (Username, FullName, Password, Team, PhoneNumber, PermissionScope) VALUES (?, ?, ?, ?, ?, ?)"
+            cursor.execute(query, (username, fname, hashed_password, team, phoneNumber, permissionScope))
+            conn.commit()
+        except sqlite3.IntegrityError as e:
+            return False
 
     else:
         return False
