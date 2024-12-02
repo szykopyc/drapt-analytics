@@ -13,6 +13,8 @@ from datetime import timedelta, datetime
 import time
 import threading
 import uuid
+import risks.portfolio
+import json
 
 app = Flask(__name__)
 
@@ -114,11 +116,21 @@ def home():
 @app.route("/risk")
 def risk():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
+        
+        portfolio = risks.portfolio.Portfolio([["WM",0.2875],["CAT",0.1434],["DG.PA",0.42],["BA.L",0.07],["RHM.DE",0.07]],365,0.04)
+        portfolio_cum_returns = portfolio.portfolio_data_cumsum
+        portfolio_cum_returns.index = portfolio_cum_returns.index.strftime('%Y-%m-%d')
+        performanceData = portfolio_cum_returns.to_json(orient="split")
+
+        monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=100, lookahead_days=30, initial_value=100)
+        
+        monteCarloData = monteCarloSimulation.to_json(orient="split")
+
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True, current_time=time.time())
+            return render_template("risk.html",admin=True, current_time=time.time(), performanceData=performanceData, monteCarloData=monteCarloData)
         
         else:
-            return render_template("home.html",admin=False, current_time=time.time())
+            return render_template("risk.html",admin=False, current_time=time.time(), performanceData=performanceData, monteCarloData=monteCarloData)
     
     else:
         session.clear()
@@ -233,8 +245,6 @@ def create_user():
         enter(username,fname,passw,team,phone_number,permission_scope)
 
     return redirect(url_for("admin_panel"))
-
-
 
 @app.route("/create", methods=["GET","POST"])
 def create():

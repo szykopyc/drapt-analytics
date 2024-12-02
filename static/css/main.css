@@ -201,6 +201,7 @@ header nav li a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
     width: 90%;
     gap: 15px;
 
@@ -289,6 +290,10 @@ header nav li a:hover {
 .element-form .input-button:hover {
     background-color: #4682b4;
     color: white;
+}
+
+#element-form-text {
+    text-decoration: none;
 }
 
 /* table styling within elements */
@@ -387,7 +392,43 @@ header nav li a:hover {
     filter: blur(0em);
 }
 
+/* image grid for the risk page */
+.element-risk-image-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 3 columns of equal width */
+    grid-gap: 10px; /* Space between items */
+    justify-items: center; /* Center each item horizontally */
+    align-items: center; /* Center each item vertically */
+}
 
+.element-risk-image-grid-item {
+    width: 100%; /* Ensure the width is 100% of the grid cell */
+    aspect-ratio: 1; /* Makes the height equal to the width, maintaining a square aspect ratio */
+    background-color: white; /* Example background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.element-risk-image-grid-item img {
+    width: 70%;
+    height: auto;
+    max-height: 80%;
+}
+
+/* element charts */
+.element-risk-tool {
+    width: 100%;
+    min-height: 500px; /* Adjust this as necessary */
+    overflow: hidden;
+}
+
+canvas {
+    min-height: 500px; /* or any desired height */
+    width: 100%;
+}
 
 /* sponsors list */
 
@@ -419,6 +460,11 @@ footer {
     justify-content: center;
     align-items: center;
     font-family: monospace;
+}
+
+#create-page {
+    min-height: 96.2vh;
+    justify-content: flex-start;
 }
 
 /* site specific modifications */
@@ -458,6 +504,10 @@ footer {
 
     .element-clickable-grid {
         grid-template-columns: 1fr; /* 2 columns for medium screens */
+    }
+
+    .element-risk-image-grid{
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .element-clickable-grid-item img {

@@ -1,7 +1,7 @@
 import pandas as pd
-import data_fetcher as data
+import risks.data_fetcher as data
 import numpy as np
-import risk_metrics
+import risks.risk_metrics as risk_metrics
 
 class Portfolio:
     def __init__(self, tickers_and_weights: list, lookback_days: int = 30, yearly_risk_free_rate: float = 0.04):
@@ -24,7 +24,9 @@ class Portfolio:
             self.portfolio_data[ticker] * weight for ticker, weight in zip(self.portfolio_data.columns, [weight for _, weight in self.tickers_and_weights])
         )
 
+        self.portfolio_data.iloc[0] = 0
         self.portfolio_data = self.portfolio_data.dropna()
+        self.portfolio_data_cumsum = self.portfolio_data.cumsum()
 
     def compute_volatility(self):
         return self.portfolio_data['Portfolio'].std()
@@ -43,7 +45,7 @@ class Portfolio:
 
         return annualized_sharpe_ratio
     
-    def simulate_monte_carlo(self):
+    def simulate_monte_carlo(self, num_simulations: int=1000, lookahead_days:int = 100, initial_value:float = 100):
         return risk_metrics.monte_carlo_simulation(self.portfolio_data['Portfolio'])
     
     def calculate_var(self, confidence):

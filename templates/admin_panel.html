@@ -15,10 +15,10 @@
             <ul>
                 <li><a href="{{url_for('risk')}}">RISK</a></li>
                 <li><a href="{{url_for('performance')}}">PERF</a></li>
+                <li><a href="{{url_for('profile')}}">PROFILE</a></li>
                 {% if admin==True %}
                 <li><a href="{{url_for('admin_panel')}}">ADMIN</a></li>
                 {% endif %}
-                <li><a href="{{url_for('profile')}}">PROFILE</a></li>
                 <li><a href="{{url_for('logout')}}">LOGOUT</a></li>
             </ul>
         </nav>

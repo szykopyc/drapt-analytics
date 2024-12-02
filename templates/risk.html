@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}">
+    <title>Home | DRAP-T</title>
+    <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="{{ url_for('static', filename='js/cumulative-performance-chart.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt=""> 
+            <p class="nav-text"><a href="{{ url_for('home') }}">DRAP-T</a></p>
+            <ul>
+                <li><a href="{{ url_for('risk') }}">RISK</a></li>
+                <li><a href="{{ url_for('performance') }}">PERF</a></li>
+                <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
+                {% if admin == True %}
+                    <li><a href="{{ url_for('admin_panel') }}">ADMIN</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-flex-container">
+        <div class="element-container" id="intro-container">
+            <h1>Welcome to risk</h1>
+            <p>This is where you will be able to simulate your portfolio risk under different situations, using our interactive data processing and visualisation platform.</p>
+            <div class="element">
+                <div class="element-risk-image-grid">
+                    <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/python-logo.webp') }}" alt=""></div>
+                    <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/pandas-logo.webp') }}" alt=""></div>
+                    <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/numpy-logo.png') }}" alt=""></div>
+                    <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/chart-js-logo.png') }}" alt=""></div>
+                </div>
+                <h3>The things you don't see...</h3>
+                <p>Over 1000 lines of code went into creating this page, from styling and layout, to computing thousands of datapoints to output these beautiful graphs. In the above grid, you can see the tools used to create them.</p>
+            </div>
+        </div>
+        <div class="element-container">
+            <div class="element">
+                <div class="element-risk-tool">
+                    <canvas id="cumulative-performance-chart"></canvas>
+                </div>
+            </div>
+            <div class="element">
+                <div class="element-risk-tool">
+                    <canvas id="monte-carlo-simulation-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var performanceData = {{ performanceData | tojson }};
+        var monteCarloData = {{ monteCarloData | tojson }};
+    </script>
+    <footer>
+        <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>
+    </footer>
+</body>
+</html>
