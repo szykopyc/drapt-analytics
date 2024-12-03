@@ -60,11 +60,17 @@ new Chart(ctx, {
                     callback: function(value) {
                         return value + '%'; // Append '%' to each tick label
                     }
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.1)"
                 }
             },
             x: {
                 ticks: {
                     color: "white", // Color for X-axis ticks
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.1)"
                 }
             }
         },

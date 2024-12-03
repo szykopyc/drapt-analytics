@@ -1,0 +1,41 @@
+Date : 2024-12-02 17:13:53
+Directory : /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF
+Total : 9 files,  68 codes, 2 comments, 22 blanks, all 92 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Python     |          6 |         65 |          1 |         22 |         88 |
+| JavaScript |          2 |          9 |          0 |          0 |          9 |
+| HTML       |          1 |         -6 |          1 |          0 |         -5 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                   |          9 |         68 |          2 |         22 |         92 |
+| . (Files)                                                                                                                           |          2 |        -64 |         -2 |        -18 |        -84 |
+| dbManagers                                                                                                                          |          3 |        128 |          3 |         40 |        171 |
+| risks                                                                                                                               |          1 |          1 |          0 |          0 |          1 |
+| static                                                                                                                              |          2 |          9 |          0 |          0 |          9 |
+| static/js                                                                                                                           |          2 |          9 |          0 |          0 |          9 |
+| templates                                                                                                                           |          1 |         -6 |          1 |          0 |         -5 |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                            | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/app.py                                    | Python     |          7 |          1 |          2 |         10 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/databaseManager.py                        | Python     |        -71 |         -3 |        -20 |        -94 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/__init__.py                    | Python     |          0 |          0 |          1 |          1 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/loginManager.py                | Python     |         71 |          3 |         20 |         94 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/portfolioManager.py            | Python     |         57 |          0 |         19 |         76 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/portfolio.py                        | Python     |          1 |          0 |          0 |          1 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/cumulative-performance-chart.js | JavaScript |          6 |          0 |          0 |          6 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/monte-carlo-simulation-chart.js | JavaScript |          3 |          0 |          0 |          3 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/risk.html                       | HTML       |         -6 |          1 |          0 |         -5 |
+| Total                                                                                                                               |            |         68 |          2 |         22 |         92 |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

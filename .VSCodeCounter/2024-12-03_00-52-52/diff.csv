@@ -1,0 +1,8 @@
+"filename", "language", "Python", "HTML", "JavaScript", "CSS", "comment", "blank", "total"
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/app.py", "Python", 41, 0, 0, 0, 5, 16, 62
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/portfolioManager.py", "Python", 41, 0, 0, 0, 0, 15, 56
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/css/main.css", "CSS", 0, 0, 0, 39, 1, 10, 50
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/confirm-delete.js", "JavaScript", 0, 0, 1, 0, 0, 0, 1
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/custom-portfolio-table.js", "JavaScript", 0, 0, 115, 0, 16, 18, 149
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/risk.html", "HTML", 0, 38, 0, 0, 0, 0, 38
+"Total", "-", 82, 38, 116, 39, 22, 59, 356

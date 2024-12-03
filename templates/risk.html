@@ -7,8 +7,8 @@
     <title>Home | DRAP-T</title>
     <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <script src="{{ url_for('static', filename='js/cumulative-performance-chart.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/custom-portfolio-table.js') }}" defer></script>
 </head>
 <body>
     <header>
@@ -38,25 +38,68 @@
                     <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/numpy-logo.png') }}" alt=""></div>
                     <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/chart-js-logo.png') }}" alt=""></div>
                 </div>
-                <h3>The things you don't see...</h3>
-                <p>Over 1000 lines of code went into creating this page, from styling and layout, to computing thousands of datapoints to output these beautiful graphs. In the above grid, you can see the tools used to create them.</p>
             </div>
         </div>
         <div class="element-container">
+            <div class="element-form">
+                <h3>Review your team's portfolio risk, or enter custom portfolio</h3>
+                <form action="" method="post" autocomplete="off">
+                    <select name="portfolio_name" id="">
+                        <option value="" disabled selected>Select portfolio</option>
+                        {% for portfolio in available_team_portfolios %}
+                            <option value="team__{{portfolio[0]}}">Portfolio: {{portfolio[0]}}</option>
+                        {% endfor %}
+                        <option value="" disabled>----------------</option>
+                        {% for portfolio in available_user_portfolios %}
+                            <option value="custom{{portfolio[0]}}">Custom Portfolio: {{portfolio[0]}}</option>
+                        {% endfor %}
+                        <option value="" disabled>----------------</option>
+                        <option value="custom_portfolio">Create custom portfolio</option>
+                    </select>
+                    <input class="input-button" type="submit" value="Analyse">
+                </form>
+            </div>
+            {% if createCustomPortfolioPage %}
             <div class="element">
-                <div class="element-risk-tool">
-                    <canvas id="cumulative-performance-chart"></canvas>
+                <table class="element-table" id="custom-portfolio-table">
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Allocation Weight  <span id="weightSum" style="font-weight: normal; color: #464646;">(Sum: 0.00)</span></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customPortfolioTable">
+                        <!-- Rows will be dynamically added here -->
+                    </tbody>
+                </table>
+                <div id="custom-portfolio-table-actions">
+                    <button id="addRow" class="input-button" type="button">Add Row</button>
+                    <input type="text" class="input-text" id="PortfolioName"placeholder="Enter portfolio name">
+                    <button id="submitPortfolio" class="input-button" type="button">Submit Portfolio</button>
                 </div>
             </div>
+            {% endif %}
+        </div>
+        <div class="element-container">
+            {% if monteCarloData %}
+            <h1>{{portfolio_name}}'s Risk</h1>
             <div class="element">
                 <div class="element-risk-tool">
+                    <h1>Monte Carlo</h1>
+                    <p>Here is a Monte Carlo simulation of the <b>{{portfolio_name}}</b> portfolio, made up of:</p>
+                    <p>
+                        {% for i in portfolio_tickers_and_weights %}
+                            {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
     <script>
-        var performanceData = {{ performanceData | tojson }};
         var monteCarloData = {{ monteCarloData | tojson }};
     </script>
     <footer>

@@ -88,15 +88,18 @@ new Chart(ctx2, {
         scales: {
             y: {
                 ticks: {
-                    color: "white", // Color for Y-axis ticks
-                    callback: function(value) {
-                        return value; // Append '%' to each tick label
-                    }
+                    color: "white" // Color for Y-axis ticks
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.1)"
                 }
             },
             x: {
                 ticks: {
                     color: "white", // Color for X-axis ticks
+                },
+                grid: {
+                    color: "rgba(255,255,255,0.1)"
                 }
             }
         },

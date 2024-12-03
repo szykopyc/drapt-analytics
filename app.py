@@ -7,7 +7,8 @@ Created on Sat Nov 23 17:27:47 2024
 """
 from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify # type: ignore
 from random import choice, randint
-from databaseManager import checkCredentials, enter, fetchAllCreds, deleteUser
+from dbManagers.loginManager import checkCredentials, enter, fetchAllCreds, deleteUser
+import dbManagers.portfolioManager as portfolio_manager
 import os
 from datetime import timedelta, datetime
 import time
@@ -17,6 +18,7 @@ import risks.portfolio
 import json
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True # delete this in production
 
 
 #app.secret_key = os.environ.get('SECRET_KEY')
@@ -113,24 +115,71 @@ def home():
         session.clear()
         return redirect(url_for("index"))
 
-@app.route("/risk")
+@app.route("/risk", methods=["GET", "POST"])
 def risk():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
-        
-        portfolio = risks.portfolio.Portfolio([["WM",0.2875],["CAT",0.1434],["DG.PA",0.42],["BA.L",0.07],["RHM.DE",0.07]],365,0.04)
-        portfolio_cum_returns = portfolio.portfolio_data_cumsum
-        portfolio_cum_returns.index = portfolio_cum_returns.index.strftime('%Y-%m-%d')
-        performanceData = portfolio_cum_returns.to_json(orient="split")
 
-        monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=100, lookahead_days=30, initial_value=100)
+        monteCarloData = None
+        createCustomPortfolioPage = False
+        portfolio_name=None
+        portfolio_tickers_and_weights=None
+
+        if request.method == "POST":
+            portfolio_name = request.form.get("portfolio_name")
+            user_data = active_sessions[session["sid"]]
+            user_name = user_data["username"]
+            user_team = user_data["userGroup"]
+
+            if portfolio_name == "custom_portfolio":
+                createCustomPortfolioPage = True
+            
+            else:
+                createCustomPortfolioPage = False
+                print(portfolio_name)
+
+                if portfolio_name[:6] == "custom":
+                    portfolio_name = portfolio_name[6:]
+                    selected_portfolio_data = portfolio_manager.fetchPortfolio(portfolio_name, user_name=user_name)
+
+                elif portfolio_name[:6] == "team__":
+                    portfolio_name = portfolio_name[6:]
+                    selected_portfolio_data = portfolio_manager.fetchPortfolio(portfolio_name, user_group=user_team)
+                
+                portfolio_tickers_and_weights = selected_portfolio_data[0][3]
+
+                portfolio = risks.portfolio.Portfolio(portfolio_tickers_and_weights,365,0.04)
+
+                monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=1000, lookahead_days=100, initial_value=100)
+                
+                monteCarloData = monteCarloSimulation.to_json(orient="split")
+
+        user_data = active_sessions[session["sid"]]
+        userName = user_data["username"]
+        userTeam = user_data["userGroup"]
+
+        try:
+            available_portfolios_for_team = portfolio_manager.fetchPortfolio(user_group=userTeam)
+            available_portfolios_for_user = portfolio_manager.fetchPortfolio(user_name=userName)
+            available_team_portfolios = []
+            available_user_portfolios = []
+            for i in available_portfolios_for_team:
+                available_team_portfolios.append(i)
+
+            for i in available_portfolios_for_user:
+                available_user_portfolios.append(i)
+
+        except Exception as e:
+            print("EXCEPTION OCCURRED *********************")
+            print(e)
+            portfolio_tickers_and_weights = [[]]
         
-        monteCarloData = monteCarloSimulation.to_json(orient="split")
+        # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, current_time=time.time(), performanceData=performanceData, monteCarloData=monteCarloData)
+            return render_template("risk.html",admin=True, current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
         
         else:
-            return render_template("risk.html",admin=False, current_time=time.time(), performanceData=performanceData, monteCarloData=monteCarloData)
+            return render_template("risk.html",admin=False, current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, available_team_portfolios=available_team_portfolios,available_user_portfolios=available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
     
     else:
         session.clear()
@@ -268,6 +317,41 @@ def logout():
     if sid:
         active_sessions.pop(sid, None)
     return redirect(url_for("index"))
+
+
+@app.route("/create-portfolio", methods=["GET","POST"])
+def create_portfolio():
+    # Ensure the user is logged in and has a valid session ID
+    if not session.get("logged_in") == True and session.get("sid") not in active_sessions:
+        return redirect(url_for("index"))
+
+    # Get the portfolio data from the request
+    data = request.json  # Ensure that the request sends valid JSON data
+    if not data or 'portfolio' not in data:
+        return jsonify({"status": "error", "message": "Portfolio data missing"}), 400
+
+    portfolio_name = data['portfolioName'] 
+    portfolio = [[item['ticker'], item['weight']] for item in data['portfolio']]
+
+
+    # Validate the portfolio
+    if len(portfolio) >= 2 and sum([row[1] for row in portfolio]) == 1.0:
+        # Portfolio is valid
+
+        session['createCustomPortfolioPage'] = False
+        user_data = active_sessions[session["sid"]]
+        user_name = user_data["username"]
+        user_group = user_data["userGroup"]
+        permission_scope = user_data["permission_scope"]
+
+        if int(permission_scope) == 1:
+            user_group="Individual"
+
+        portfolio_manager.insertPortfolio(portfolio_name, user_name,user_group, portfolio)
+        return jsonify({"status": "success", "redirect_url": "/risk"}), 200
+    else:
+        # Handle invalid portfolio case
+        return jsonify({"status": "error", "message": "Invalid portfolio data"}), 400
 
 # --- background processes
 def active_session_cleanup():

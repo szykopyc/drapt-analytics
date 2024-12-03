@@ -27,6 +27,7 @@ class Portfolio:
         self.portfolio_data.iloc[0] = 0
         self.portfolio_data = self.portfolio_data.dropna()
         self.portfolio_data_cumsum = self.portfolio_data.cumsum()
+        self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index.strftime('%Y-%m-%d')
 
     def compute_volatility(self):
         return self.portfolio_data['Portfolio'].std()
@@ -46,7 +47,7 @@ class Portfolio:
         return annualized_sharpe_ratio
     
     def simulate_monte_carlo(self, num_simulations: int=1000, lookahead_days:int = 100, initial_value:float = 100):
-        return risk_metrics.monte_carlo_simulation(self.portfolio_data['Portfolio'])
+        return risk_metrics.monte_carlo_simulation(self.portfolio_data['Portfolio'], num_simulations=num_simulations,lookahead_days=lookahead_days,initial_value=initial_value)
     
     def calculate_var(self, confidence):
         return risk_metrics.calculate_var(self.portfolio_data['Portfolio'], confidence_level=confidence)
