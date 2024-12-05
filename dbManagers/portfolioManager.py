@@ -1,85 +1,124 @@
 import sqlite3 
 import json
 
-def fetchPortfolio(portfolio_name:str="", user_name: str="",user_group:str = ""):
+# two tables, team_portfolios and user_portfolios, with the following schema:
+'''
+CREATE TABLE sqlite_sequence(name,seq);
+sqlite> CREATE TABLE team_portfolios (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    PortfolioName VARCHAR NOT NULL,
+    UserName VARCHAR NOT NULL,
+    UserTeam VARCHAR NOT NULL,
+    PortfolioData JSON NOT NULL
+);
+'''
 
+def fetchAllTeamPortfolios(user_team: str):
     try:
-        with sqlite3.connect('databases/team_portfolios.db') as conn:
+        with sqlite3.connect('databases/portfolios.db') as conn:
             cursor = conn.cursor()
-            if user_name != "" and portfolio_name=="":
-                    cursor.execute('SELECT * FROM portfolios WHERE UserName =?',(user_name,))
-                    
-                    rows = cursor.fetchall()
 
-                    return_2dList = []
+            if user_team=="": return False
 
-                    for i in rows:
-                        portfolio_name = i[0]
-                        user_name = [1]
-                        user_group = i[2]
-                        portfolio_data = i[3]
-                        portfolio_data_list = json.loads(portfolio_data)
-                        package = [portfolio_name,user_name,user_group,portfolio_data_list]
-                        return_2dList.append(package)
-
-            elif user_group!= "" and user_name=="":
-                if user_group=="other":
-                        cursor = conn.cursor()
-                        cursor.execute('SELECT * FROM portfolios')
-                else:
-                    cursor = conn.cursor()
-                    cursor.execute('SELECT * FROM portfolios WHERE UserGroup =?',(user_group,))
-                
-
-                rows = cursor.fetchall()
-                return_2dList = []
-
-                for i in rows:
-                    portfolio_name = i[0]
-                    user_name = [1]
-                    user_group = i[2]
-                    portfolio_data = i[3]
-                    portfolio_data_list = json.loads(portfolio_data)
-                    package = [portfolio_name,user_name,user_group,portfolio_data_list]
-                    return_2dList.append(package)
-
-
+            elif user_team=="other":
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM team_portfolios')
             else:
-                if portfolio_name!="" and user_name!="":
-                    cursor.execute('SELECT * FROM portfolios WHERE PortfolioName =? AND UserName =?',(portfolio_name,user_name))
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM team_portfolios WHERE UserTeam =?',(user_team,))
+                    
+            rows = cursor.fetchall()
 
-                elif portfolio_name!="" and user_group!="":
-                    cursor.execute('SELECT * FROM portfolios WHERE PortfolioName =? AND UserGroup =?',(portfolio_name,user_group))
-                
-                rows = cursor.fetchall()
+            data = []
 
-                return_2dList = []
+            for i in rows:
+                portfolio_name = i[0]
+                user_name = [1]
+                user_team = i[2]
+                portfolio_data = i[3]
+                portfolio_data_list = json.loads(portfolio_data)
+                package = [portfolio_name,user_name,user_team,portfolio_data_list]
+                data.append(package)
 
-                for i in rows:
-                    portfolio_name = i[0]
-                    user_name = i[1]
-                    user_group = i[2]
-                    portfolio_data = i[3]
-                    portfolio_data_list = json.loads(portfolio_data)
-                    package = [portfolio_name,user_name,user_group,portfolio_data_list]
-                    return_2dList.append(package)
+    except sqlite3.OperationalError as e:
+        return e
 
-            conn.commit()        
+    return data
+
+def fetchAllUserPortfolios(user_name: str):
+    try:
+        with sqlite3.connect('databases/portfolios.db') as conn:
+            cursor = conn.cursor()
+
+            if user_name=="": return False
+            elif user_name=="admin":
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM user_portfolios')
+            else:
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM user_portfolios WHERE UserName =?',(user_name,))
+                    
+            rows = cursor.fetchall()
+
+            data = []
+
+            for i in rows:
+                portfolio_name = i[0]
+                user_name = [1]
+                user_team = i[2]
+                portfolio_data = i[3]
+                portfolio_data_list = json.loads(portfolio_data)
+                package = [portfolio_name,user_name,user_team,portfolio_data_list]
+                data.append(package)
 
     except sqlite3.OperationalError as e:
         print(e)
         return False
 
-    return return_2dList
+    return data
+
+def fetchPortfolio(portfolio_name:str="", user_name: str="",user_team:str = ""):
+    try:
+        with sqlite3.connect('databases/portfolios.db') as conn:
+            cursor = conn.cursor()
+
+            if user_name=="" and user_team=="": return False
+            elif user_name!="" and user_team!="": return False
+
+            elif user_name!="":
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM user_portfolios WHERE PortfolioName = ? AND UserName =?',(portfolio_name,user_name))
+            elif user_team!="":
+                cursor.execute('SELECT PortfolioName, UserName, UserTeam, PortfolioData FROM team_portfolios WHERE PortfolioName = ? AND UserTeam =?',(portfolio_name,user_team))
+            
+            else: return False
+
+            rows = cursor.fetchall()
+
+            data = []
+
+            for i in rows:
+                portfolio_name = i[0]
+                user_name = [1]
+                user_team = i[2]
+                portfolio_data = i[3]
+                portfolio_data_list = json.loads(portfolio_data)
+                package = [portfolio_name,user_name,user_team,portfolio_data_list]
+                data.append(package)
+
+    except sqlite3.OperationalError as e:
+        print(e)
+        return False
+
+    return data
 
 
-def insertPortfolio(portfolio_name:str ,user_name:str,user_group: str, portfolioData: list):
+def insertPortfolio(portfolio_name:str ,user_name:str, user_team: str, portfolio_classification:str , portfolioData: list):
     portfolioDataJSON = json.dumps(portfolioData)
 
     try:
-        with sqlite3.connect('databases/team_portfolios.db') as conn:
+        with sqlite3.connect('databases/portfolios.db') as conn:
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO portfolios (PortfolioName, UserName ,UserGroup ,PortfolioData) VALUES (?, ?, ?, ?)',(portfolio_name, user_name, user_group,portfolioDataJSON))
+            if portfolio_classification=="user":
+                cursor.execute('INSERT INTO user_portfolios (PortfolioName, UserName, UserTeam, PortfolioData) VALUES (?, ?, ?, ?)',(portfolio_name, user_name, user_team,portfolioDataJSON))
+            elif portfolio_classification=="team":
+                cursor.execute('INSERT INTO team_portfolios (PortfolioName, UserName, UserTeam, PortfolioData) VALUES (?, ?, ?, ?)',(portfolio_name, user_name, user_team,portfolioDataJSON))
+            else: return False
             conn.commit()
 
     except sqlite3.OperationalError as e:
@@ -90,7 +129,7 @@ def insertPortfolio(portfolio_name:str ,user_name:str,user_group: str, portfolio
 
 def deletePortfolio(class_name: str):
     try:
-        with sqlite3.connect('databases/team_portfolios.db') as conn:
+        with sqlite3.connect('databases/portfolios.db') as conn:
             cursor = conn.cursor()
             cursor.execute('DELETE FROM portfolios WHERE ClassName =?',(class_name,))
             row = cursor.fetchall()
@@ -106,7 +145,7 @@ def modifyPortfolio(class_name:str, modified_portfolio:list):
     modified_portfolio = json.dumps(modified_portfolio)
 
     try:
-        with sqlite3.connect('databases/team_portfolios.db') as conn:
+        with sqlite3.connect('databases/portfolios.db') as conn:
             cursor = conn.cursor()
             cursor.execute('UPDATE portfolios SET PortfolioData=? WHERE ClassName =?',(modified_portfolio,class_name))
             conn.commit()

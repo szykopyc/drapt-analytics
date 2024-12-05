@@ -47,11 +47,11 @@
                     <select name="portfolio_name" id="">
                         <option value="" disabled selected>Select portfolio</option>
                         {% for portfolio in available_team_portfolios %}
-                            <option value="team__{{portfolio[0]}}">Portfolio: {{portfolio[0]}}</option>
+                            <option value="team_{{portfolio[0]}}">Team Portfolio: {{portfolio[0]}}</option>
                         {% endfor %}
                         <option value="" disabled>----------------</option>
                         {% for portfolio in available_user_portfolios %}
-                            <option value="custom{{portfolio[0]}}">Custom Portfolio: {{portfolio[0]}}</option>
+                            <option value="user_{{portfolio[0]}}">User Portfolio: {{portfolio[0]}}</option>
                         {% endfor %}
                         <option value="" disabled>----------------</option>
                         <option value="custom_portfolio">Create custom portfolio</option>
@@ -76,28 +76,59 @@
                 <div id="custom-portfolio-table-actions">
                     <button id="addRow" class="input-button" type="button">Add Row</button>
                     <input type="text" class="input-text" id="PortfolioName"placeholder="Enter portfolio name">
+                    {% if manager_status %}
+                    <select name="portfolio_for" id="portfolio_for">
+                        <option value="" disabled selected>What type of portfolio is this?</option>
+                        <option value="team">Portfolio for my team</option>
+                        <option value="user">Custom portfolio for me</option>
+                    </select>
+                    {% endif %}
                     <button id="submitPortfolio" class="input-button" type="button">Submit Portfolio</button>
                 </div>
             </div>
             {% endif %}
         </div>
+        {% if monteCarloData and risk_metric_data %}
         <div class="element-container">
-            {% if monteCarloData %}
             <h1>{{portfolio_name}}'s Risk</h1>
+            <p>
+                {% for i in portfolio_tickers_and_weights %}
+                    {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
             <div class="element">
                 <div class="element-risk-tool">
                     <h1>Monte Carlo</h1>
-                    <p>Here is a Monte Carlo simulation of the <b>{{portfolio_name}}</b> portfolio, made up of:</p>
-                    <p>
-                        {% for i in portfolio_tickers_and_weights %}
-                            {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </p>
+                    <p>Here is a Monte Carlo simulation of the <b>{{portfolio_name}}</b></p>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
-            {% endif %}
+            <table class="element-table">
+                <thead>
+                    <tr>
+                        <th>Volatility (D)</th>
+                        <th>Volatility (W)</th>
+                        <th>Volatility (M)</th>
+                        <th>Variance</th>
+                        <th>Sharpe Ratio</th>
+                        <th>VaR 95</th>
+                        <th>VaR 99</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ (risk_metric_data[0] | float * 100) | round(2) }}%</td>
+                        <td>{{ (risk_metric_data[1] | float * 100) | round(2) }}%</td>
+                        <td>{{ (risk_metric_data[2] | float * 100) | round(2) }}%</td>
+                        <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
+                        <td>{{ risk_metric_data[4] | round(2) }}</td>
+                        <td>{{ (risk_metric_data[5] | float * 100) | round(2) }}%</td>
+                        <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        {% endif %}
     </div>
     <script>
         var monteCarloData = {{ monteCarloData | tojson }};

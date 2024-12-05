@@ -4,19 +4,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitPortfolioButton = document.getElementById('submitPortfolio');
     const weightSumElement = document.getElementById('weightSum');
     const portfolioName = document.getElementById('PortfolioName');
+    const portfolioForDropdown = document.getElementById('portfolio_for'); // Dropdown for manager status
 
-    // Function to calculate and update the weight sum
     function updateWeightSum() {
         let totalWeight = 0;
         const weightInputs = tableBody.querySelectorAll('input[name="allocationWeight"]');
         weightInputs.forEach(input => {
-            const weight = parseFloat(input.value) || 0; // Default to 0 if input is empty or invalid
+            const weight = parseFloat(input.value) || 0;
             totalWeight += weight;
         });
         weightSumElement.textContent = `(Sum: ${totalWeight.toFixed(2)})`;
     }
 
-    // Function to add a new row
     function addRow() {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
@@ -26,30 +25,25 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         tableBody.appendChild(newRow);
 
-        // Attach event listener to the new weight input
         const weightInput = newRow.querySelector('input[name="allocationWeight"]');
         weightInput.addEventListener('input', updateWeightSum);
 
-        // Attach event listener to the delete button
         const deleteButton = newRow.querySelector('.deleteRow');
         deleteButton.addEventListener('click', function () {
             newRow.remove();
             updateWeightSum();
-            ensureMinimumRows(); // Ensure minimum rows after deletion
+            ensureMinimumRows();
         });
 
-        // Update weight sum
         updateWeightSum();
     }
 
-    // Ensure at least two rows exist
     function ensureMinimumRows() {
         while (tableBody.rows.length < 2) {
             addRow();
         }
     }
 
-    // Validate the portfolio before submission
     function validatePortfolio() {
         const rows = tableBody.querySelectorAll('tr');
         if (rows.length < 2) {
@@ -76,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
 
-        if (Math.abs(totalWeight - 1) > 0.01) { // Allow a small margin for floating-point errors
+        if (Math.abs(totalWeight - 1) > 0.01) {
             alert('The total weight must add up to 1.');
             return false;
         }
@@ -86,64 +80,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
     submitPortfolioButton.addEventListener('click', function () {
         if (validatePortfolio()) {
-            // If valid, create the payload and submit via fetch
             const portfolio = [];
             const rows = tableBody.querySelectorAll('tr');
-            const portfolioNameValue = portfolioName.value.trim(); // Get and trim portfolio name
-    
-            // Ensure portfolio name is provided
+            const portfolioNameValue = portfolioName.value.trim();
+
             if (!portfolioNameValue) {
                 alert('Please provide a name for the portfolio.');
                 return;
             }
-    
+
             rows.forEach(row => {
                 const ticker = row.querySelector('input[name="ticker"]').value;
                 const weight = parseFloat(row.querySelector('input[name="allocationWeight"]').value);
                 portfolio.push({ ticker, weight });
             });
-    
-            // Submit the portfolio using fetch
+
+            const payload = {
+                portfolioName: portfolioNameValue,
+                portfolio,
+            };
+
+            // Add portfolioFor value if the dropdown exists
+            if (portfolioForDropdown) {
+                const portfolioForValue = portfolioForDropdown.value;
+                if (!portfolioForValue) {
+                    alert('Please select the portfolio type.');
+                    return;
+                }
+                payload.portfolioFor = portfolioForValue;
+            }
+
             fetch('/create-portfolio', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    portfolioName: portfolioNameValue, // Include portfolio name
-                    portfolio, 
-                }),
+                body: JSON.stringify(payload),
             })
-            .then(response => {
-                console.log('Response:', response);
-                if (response.ok) {
-                    // If the response is successful, we should check for JSON or redirect
-                    return response.json().catch(() => {
-                        // If response is not JSON, log and handle the redirect or HTML
-                        console.error('Response is not JSON. Handling redirect.');
-                        window.location.href = '/risk';  // Manually handle redirect
-                        throw new Error('Redirecting to risk page');
-                    });
-                } else {
-                    // Handle errors like 404, 500, etc.
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-            })
-            .then(data => {
-                // If response was JSON, handle it here
-                console.log('Portfolio successfully created!', data);
-                alert('Your portfolio has been successfully created! Further instructions: Check your risk profile or modify your portfolio as needed.');
-                window.location.href = '/risk';  // Redirect to the risk page or another page
-            })
-            .catch(error => {
-                // Log any error and alert the user
-                console.error('Error:', error);
-                alert('An error occurred while submitting your portfolio. Please try again.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.json().catch(() => {
+                            window.location.href = '/risk';
+                        });
+                    } else {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                })
+                .then(data => {
+                    alert('Your portfolio has been successfully created!');
+                    window.location.href = '/risk';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while submitting your portfolio. Please try again.');
+                });
         }
     });
-    
-    // Add initial rows and attach event listener to "Add Row" button
+
     ensureMinimumRows();
     addRowButton.addEventListener('click', addRow);
 });
