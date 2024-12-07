@@ -72,6 +72,12 @@
                     <input class="input-button" type="submit" id="analyse-button" value="Analyse">
                 </form>
             </div>
+            {% if noPortfolioError %}
+            <div class="element" style="flex-direction: column;">
+                <h2 style="color: red; text-align: center;">No portfolio provided</h1>
+                <h3>Please select a portfolio from the list, or create custom</h3>
+            </div>
+            {% endif %}
             {% if createCustomPortfolioPage %}
             <div class="element">
                 <table class="element-table" id="custom-portfolio-table">

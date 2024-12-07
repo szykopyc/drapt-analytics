@@ -70,12 +70,10 @@
                       <td id="{% if user[3]=='4' %}userGroupAdminTD{% endif %}">{{user[3]}}</td>
                       <td>{{ user[4] }}</td>
                       <td class="element-table-delete">
-                        {% if userScope == "4" and user[0]!='admin' %}
-                        <form action="{{url_for('delete_user')}}" method="post" class="element-table-delete-form">
-                            <input type="hidden" name="username" value="{{ user[0] }}">
-                            <button type="submit">X</button>
-                        </form>
-                        {% endif %}
+                      <form action="{{url_for('delete_user')}}" method="post" class="element-table-delete-form">
+                        <input type="hidden" name="username" value="{{ user[0] }}">
+                        <button type="submit">X</button>
+                      </form>
                       </td>
                     </tr>
                   {% endfor %}
@@ -99,17 +97,15 @@
                 {% for sid, data in active_sessions.items() %}
                   <tr>
                     <td>{{ sid }}</td>
-                    <td>{{ data["username"] }}</td>
-                    <td>{{ data["userGroup"] }}</td>
+                    <td>{{ data["user_name"] }}</td>
+                    <td>{{ data["user_team"] }}</td>
                     <td id="{% if data['permission_scope']=='4' %}userGroupAdminTD{% endif %}">{{ data["permission_scope"]}}</td>
                     <td>{{ data["login_time"] }}</td>
                     <td class="element-table-delete">
-                      {% if data["permission_scope"] !="4" %}
-                      <form action="{{url_for('terminate_session')}}" method="post" class="element-table-delete-form">
-                          <input type="hidden" name="sid" value="{{ sid }}">
-                          <button type="submit">X</button>
-                      </form>
-                      {% endif %}
+                    <form action="{{url_for('terminate_session')}}" method="post" class="element-table-delete-form">
+                      <input type="hidden" name="sid" value="{{ sid }}">
+                      <button type="submit">X</button>
+                    </form>
                     </td>
                   </tr>
                 {% endfor %}

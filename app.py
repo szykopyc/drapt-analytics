@@ -134,6 +134,8 @@ def risk():
         performanceData= None
         histogramData = None
 
+        noPortfolioError = False
+
         if request.method == "POST":
             portfolio_name = request.form.get("portfolio_name")
 
@@ -149,6 +151,9 @@ def risk():
             if portfolio_name == "custom_portfolio":
                 createCustomPortfolioPage = True
             
+            elif portfolio_name==None or portfolio_name=="":
+                noPortfolioError=True
+
             else:
                 createCustomPortfolioPage = False
 
@@ -204,10 +209,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
     
     else:
         session.clear()
