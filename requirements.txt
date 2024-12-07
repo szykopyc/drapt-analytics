@@ -164,7 +164,6 @@ pyhdfe==0.2.0
 PyJWT==2.9.0
 pyluach==2.2.0
 pyparsing==3.1.2
-pyppeteer==2.0.0
 pyquery==2.0.0
 pytest==8.3.2
 pytest-freezegun==0.4.2
