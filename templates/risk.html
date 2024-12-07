@@ -6,9 +6,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}">
     <title>Home | DRAP-T</title>
     <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/returns-histogram.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/cumulative-performance-chart.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/custom-portfolio-table.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/historical-data-slider.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/show-risk-settings.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
 </head>
 <body>
     <header>
@@ -44,7 +49,7 @@
             <div class="element-form">
                 <h3>Review your team's portfolio risk, or enter custom portfolio</h3>
                 <form action="" method="post" autocomplete="off">
-                    <select name="portfolio_name" id="">
+                    <select name="portfolio_name" id="portfolio-selector">
                         <option value="" disabled selected>Select portfolio</option>
                         {% for portfolio in available_team_portfolios %}
                             <option value="team_{{portfolio[0]}}">Team Portfolio: {{portfolio[0]}}</option>
@@ -56,7 +61,15 @@
                         <option value="" disabled>----------------</option>
                         <option value="custom_portfolio">Create custom portfolio</option>
                     </select>
-                    <input class="input-button" type="submit" value="Analyse">
+                    <div class="element-form-settings" id="element-form-settings">
+                        <input type="range" min="0.25" max="5.00" value="1" step="0.25" class="slider-box" id="historical-data-range" name="historical-data-range">
+                        <p>Historical Data Used - <span id="lookback-days"></span></p>
+                        <div class="enable-monte-carlo">
+                            <p>Enable Charts</p>
+                            <input type="checkbox" id="enable-monte-carlo" name="enable-monte-carlo" value="enable-monte-carlo" checked>
+                        </div>
+                    </div>
+                    <input class="input-button" type="submit" id="analyse-button" value="Analyse">
                 </form>
             </div>
             {% if createCustomPortfolioPage %}
@@ -88,7 +101,7 @@
             </div>
             {% endif %}
         </div>
-        {% if monteCarloData and risk_metric_data %}
+        {% if monteCarloData or risk_metric_data %}
         <div class="element-container">
             <h1>{{portfolio_name}}'s Risk</h1>
             <p>
@@ -96,13 +109,25 @@
                     {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
                 {% endfor %}
             </p>
+            {% if monteCarloData%}
             <div class="element">
                 <div class="element-risk-tool">
                     <h1>Monte Carlo</h1>
-                    <p>Here is a Monte Carlo simulation of the <b>{{portfolio_name}}</b></p>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
+            <div class="element" style="flex-direction: row;">
+                <div class="element-risk-tool">
+                    <h2>Past Performance Data</h2>
+                    <canvas id="cumulative-performance-chart" width="400" height="400"></canvas>
+                </div>
+                <div class="element-risk-tool">
+                    <h2>Histogram of Historical Returns</h2>
+                    <canvas id="histogramChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+            {% endif %}
+            {% if risk_metric_data%}
             <table class="element-table">
                 <thead>
                     <tr>
@@ -127,11 +152,14 @@
                     </tr>
                 </tbody>
             </table>
+            {% endif %}
         </div>
         {% endif %}
     </div>
     <script>
         var monteCarloData = {{ monteCarloData | tojson }};
+        var histogramData = {{ histogramData | tojson}};
+        var performanceData = {{performanceData | tojson }};
     </script>
     <footer>
         <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>

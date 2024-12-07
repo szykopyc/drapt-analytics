@@ -14,11 +14,13 @@ class Portfolio:
         self.portfolio_data = pd.DataFrame()
         self.portfolio_data_cumsum = None
 
-        for i in self.tickers_and_weights:
-            asset = data.DataFetcher(i[0], self.lookback_days)
-            asset_data = asset.get_data()
+        tickers = []
 
-            self.portfolio_data = pd.concat([self.portfolio_data, asset_data], axis=1)
+        for i in self.tickers_and_weights:
+            tickers.append(i[0])
+
+        dataFetcherInstance = data.DataFetcher(tickers, self.lookback_days)
+        self.portfolio_data = dataFetcherInstance.get_data()
 
         self.portfolio_data["Portfolio"] = sum(
             self.portfolio_data[ticker] * weight for ticker, weight in zip(self.portfolio_data.columns, [weight for _, weight in self.tickers_and_weights])
@@ -27,6 +29,7 @@ class Portfolio:
         self.portfolio_data.iloc[0] = 0
         self.portfolio_data = self.portfolio_data.dropna()
         self.portfolio_data_cumsum = self.portfolio_data.cumsum()
+
         self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index.strftime('%Y-%m-%d')
 
     def compute_volatility(self):

@@ -10,6 +10,24 @@ var portfolioData = data.map(function(row) {
     return row[portfolioIndex] * 100; // Convert to percentage
 });
 
+// Function to calculate moving average
+function calculateMovingAverage(data, windowSize) {
+    let ma = [];
+    for (let i = 0; i < data.length; i++) {
+        if (i < windowSize - 1) {
+            ma.push(null); // Not enough data for MA, so push null
+        } else {
+            const window = data.slice(i - windowSize + 1, i + 1);
+            const average = window.reduce((sum, value) => sum + value, 0) / window.length;
+            ma.push(average);
+        }
+    }
+    return ma;
+}
+
+// Calculate 30-period moving average
+const movingAverageData = calculateMovingAverage(portfolioData, 30);
+
 const ctx = document.getElementById('cumulative-performance-chart').getContext('2d');
 new Chart(ctx, {
     type: 'line',
@@ -23,6 +41,16 @@ new Chart(ctx, {
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
             pointRadius: 0 // Set pointRadius to 0 to hide the points
+        },
+        {
+            label: '30-Day Moving Average',
+            data: movingAverageData,
+            borderColor: 'rgba(255, 159, 64, 1)', // Orange color for MA line
+            backgroundColor: 'rgba(255, 159, 64, 0.2)', // Light orange
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4,
+            pointRadius: 0, // Set pointRadius to 0 to hide the points
+            hidden: true
         }]
     },
     options: {
@@ -68,6 +96,7 @@ new Chart(ctx, {
             x: {
                 ticks: {
                     color: "white", // Color for X-axis ticks
+                    maxTicksLimit: 10
                 },
                 grid: {
                     color: "rgba(255,255,255,0.1)"

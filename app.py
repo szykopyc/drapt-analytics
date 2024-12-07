@@ -118,25 +118,34 @@ def home():
 
 @app.route("/risk", methods=["GET", "POST"])
 def risk():
-    user_data = active_sessions[session["sid"]]
-    user_name = user_data["user_name"]
-    user_team = user_data["user_team"]
-    manager_status = int(user_data["permission_scope"]) # this is so that managers have the option whether to create a custom portfolio or team portfolio
-
-    if manager_status>1: manager_status = True
-    else: manager_status = False
-    
-
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
+        user_data = active_sessions[session["sid"]]
+        user_name = user_data["user_name"]
+        user_team = user_data["user_team"]
+        manager_status = int(user_data["permission_scope"]) # this is so that managers have the option whether to create a custom portfolio or team portfolio
+
+        if manager_status>1: manager_status = True
+        else: manager_status = False
 
         monteCarloData = None
         createCustomPortfolioPage = False
         portfolio_name=None
         portfolio_tickers_and_weights=None
         risk_metric_data = None
+        performanceData= None
+        histogramData = None
 
         if request.method == "POST":
             portfolio_name = request.form.get("portfolio_name")
+
+            lookback_days = 365* float(request.form.get("historical-data-range"))
+            lookback_days = round(lookback_days,0)
+
+            enable_monte_carlo_sim = request.form.get("enable-monte-carlo")
+            if enable_monte_carlo_sim =="enable-monte-carlo":
+                enable_monte_carlo_sim = True
+            else:
+                enable_monte_carlo_sim = False
 
             if portfolio_name == "custom_portfolio":
                 createCustomPortfolioPage = True
@@ -154,7 +163,7 @@ def risk():
                 
                 portfolio_tickers_and_weights = selected_portfolio_data[0][3]
 
-                portfolio = risks.portfolio.Portfolio(portfolio_tickers_and_weights,1095,0.03)
+                portfolio = risks.portfolio.Portfolio(portfolio_tickers_and_weights,lookback_days,0.04)
 
                 portfolio_volatility_daily = portfolio.compute_volatility()
                 portfolio_volatility_weekly = portfolio.compute_volatility() * np.sqrt(5)
@@ -166,10 +175,15 @@ def risk():
 
                 risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, portfolio_variance, portfolio_sharpe, portfolio_var95, portfolio_var99]
 
+                if enable_monte_carlo_sim:
+                    monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)
+                    
+                    monteCarloData = monteCarloSimulation.to_json(orient="split")
+                else:
+                    monteCarloData = None
 
-                monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)
-                
-                monteCarloData = monteCarloSimulation.to_json(orient="split")
+                performanceData = portfolio.portfolio_data_cumsum.to_json(orient="split")
+                histogramData = portfolio.portfolio_data.to_json(orient="split")
 
 
         try:
@@ -191,10 +205,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data=risk_metric_data, available_team_portfolios=available_team_portfolios,available_user_portfolios=available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
     
     else:
         session.clear()

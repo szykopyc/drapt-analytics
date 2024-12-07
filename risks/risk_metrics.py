@@ -7,7 +7,6 @@ def calculate_var(returns, confidence_level=0.95):
     # Historical VaR
     return np.percentile(returns, (1 - confidence_level) * 100)
 
-
 def monte_carlo_simulation(returns, num_simulations: int = 1000, lookahead_days: int = 100, initial_value: float = 100):
     """Run Monte Carlo simulation to predict future prices."""
     # Convert daily returns to log returns (use log(1+return))

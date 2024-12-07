@@ -35,31 +35,33 @@
             <p><b>DRAP-T</b> provides dynamic risk analysis feedback for any set of assets provided, along with the option to analyse its performance compared to any benchmark.</p>
         </div>
         <div class="element-container">
-            <h2 id="element-form-text">Please log in, or <a id="create_account_link" href="{{url_for('create')}}">create an account</a></h2>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        {% for category, message in messages %}
-                            <p>{{message}}</p>
-                    {% endfor %}
+            <div class="element-form">
+                <h2 id="element-form-text">Please log in, or <a id="create_account_link" href="{{url_for('create')}}">create an account</a></h2>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <p>{{message}}</p>
+                        {% endfor %}
 
-                {% endif %}
-            {% endwith %}
-            <form action="" method="post" autocomplete="on">
-                <input class="input_box" type="text" placeholder="Username" name="username" value="{{
-                    request.form.username }}">
-                   <input class="input_box" type="password" placeholder="Password" name="password" value="{{
-                    request.form.password }}">
-                  <select name="userGroup" class="input_group">
-                      <option value="" disabled selected>Select your team</option>
-                      <option value="industrials">Industrials</option>
-                      <option value="tmt">TMT</option>
-                      <option value="usc">US & Canada</option>
-                      <option value="other">Other</option>
-                  </select>
-                  <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[1]}}?" name="verification" value="{{
-                      request.form.username }}" autocomplete="off">
-                  <input class="input-button" type="submit" value="Login">
-            </form>  
+                    {% endif %}
+                {% endwith %}
+                <form action="" method="post" autocomplete="on">
+                    <input class="input_box" type="text" placeholder="Username" name="username" value="{{
+                        request.form.username }}">
+                    <input class="input_box" type="password" placeholder="Password" name="password" value="{{
+                        request.form.password }}">
+                    <select name="userGroup" class="input_group">
+                        <option value="" disabled selected>Select your team</option>
+                        <option value="industrials">Industrials</option>
+                        <option value="tmt">TMT</option>
+                        <option value="usc">US & Canada</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[1]}}?" name="verification" value="{{
+                        request.form.username }}" autocomplete="off">
+                    <input class="input-button" type="submit" value="Login">
+                </form>  
+            </div>
         </div>
         <div class="element-container">
             <h2>Sponsors</h2>
