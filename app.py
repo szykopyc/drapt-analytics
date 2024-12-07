@@ -22,8 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True # delete this in production
 
 
-#app.secret_key = os.environ.get('SECRET_KEY')
-app.secret_key = 'abcCHANGEME'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 app.config.update(
     SESSION_COOKIE_SECURE=False,  # Send cookies only over HTTPS
