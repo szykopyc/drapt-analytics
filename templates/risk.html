@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}">
     <title>Home | DRAP-T</title>
     <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/warn-screen-size.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/correlation-matrix-figure.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/returns-histogram.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/cumulative-performance-chart.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/custom-portfolio-table.js') }}" defer></script>
@@ -14,6 +16,7 @@
     <script src="{{ url_for('static', filename='js/show-risk-settings.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
 </head>
 <body>
     <header>
@@ -116,13 +119,19 @@
                 {% endfor %}
             </p>
             {% if monteCarloData%}
-            <div class="element">
+            <div class="element-risk-chart">
                 <div class="element-risk-tool">
                     <h1>Monte Carlo</h1>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
-            <div class="element" style="flex-direction: row;">
+            <div class="element-risk-chart">
+                <div class="element-risk-tool">
+                    <h1>Asset Correlation Matrix</h1>
+                    <canvas id="correlation-matrix-figure"></canvas>
+                </div>
+            </div>
+            <div class="element-risk-chart">
                 <div class="element-risk-tool">
                     <h2>Past Performance Data</h2>
                     <canvas id="cumulative-performance-chart" width="400" height="400"></canvas>
@@ -134,30 +143,32 @@
             </div>
             {% endif %}
             {% if risk_metric_data%}
-            <table class="element-table">
-                <thead>
-                    <tr>
-                        <th>Volatility (D)</th>
-                        <th>Volatility (W)</th>
-                        <th>Volatility (M)</th>
-                        <th>Variance</th>
-                        <th>Sharpe Ratio</th>
-                        <th>VaR 95</th>
-                        <th>VaR 99</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ (risk_metric_data[0] | float * 100) | round(2) }}%</td>
-                        <td>{{ (risk_metric_data[1] | float * 100) | round(2) }}%</td>
-                        <td>{{ (risk_metric_data[2] | float * 100) | round(2) }}%</td>
-                        <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
-                        <td>{{ risk_metric_data[4] | round(2) }}</td>
-                        <td>{{ (risk_metric_data[5] | float * 100) | round(2) }}%</td>
-                        <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="risk-element-table-container">
+                <table class="element-table risk-table">
+                    <thead>
+                        <tr>
+                            <th>Volatility (D)</th>
+                            <th>Volatility (W)</th>
+                            <th>Volatility (M)</th>
+                            <th>Variance</th>
+                            <th>Sharpe Ratio</th>
+                            <th>VaR 95</th>
+                            <th>VaR 99</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ (risk_metric_data[0] | float * 100) | round(2) }}%</td>
+                            <td>{{ (risk_metric_data[1] | float * 100) | round(2) }}%</td>
+                            <td>{{ (risk_metric_data[2] | float * 100) | round(2) }}%</td>
+                            <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
+                            <td>{{ risk_metric_data[4] | round(2) }}</td>
+                            <td>{{ (risk_metric_data[5] | float * 100) | round(2) }}%</td>
+                            <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             {% endif %}
         </div>
         {% endif %}
@@ -166,6 +177,7 @@
         var monteCarloData = {{ monteCarloData | tojson }};
         var histogramData = {{ histogramData | tojson}};
         var performanceData = {{performanceData | tojson }};
+        var correlationMatrixData = {{correlationMatrixData | tojson}};
     </script>
     <footer>
         <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>

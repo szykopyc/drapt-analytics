@@ -9,20 +9,14 @@ class DataFetcher:
         self.lookback_days = lookback_days
 
     def fetch_single_ticker(self, ticker):
-        """Fetch data for a single ticker."""
         data_start_date = datetime.now() - timedelta(days=self.lookback_days)
         try:
             # Download the data for the ticker
             data = yf.download(ticker, data_start_date)['Close']
-
-            if data.empty:
-                print(f"Error downloading data for: {ticker}")
-                return pd.Series(name=ticker)
-
             # Calculate cumulative percentage change
-            return data.pct_change().rename(ticker)
+            return data.pct_change()
         except Exception as e:
-            print(f"Error downloading data for {ticker}: {e}")
+            print(f"EXCEPTION | Error downloading data for {ticker}: {e}")
             return pd.Series(name=ticker)
 
     def get_data(self):

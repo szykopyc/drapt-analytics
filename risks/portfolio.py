@@ -19,6 +19,8 @@ class Portfolio:
         for i in self.tickers_and_weights:
             tickers.append(i[0])
 
+        print(tickers)
+
         dataFetcherInstance = data.DataFetcher(tickers, self.lookback_days)
         self.portfolio_data = dataFetcherInstance.get_data()
 
@@ -54,3 +56,6 @@ class Portfolio:
     
     def calculate_var(self, confidence):
         return risk_metrics.calculate_var(self.portfolio_data['Portfolio'], confidence_level=confidence)
+    
+    def compute_correlation_matrix(self):
+        return risk_metrics.correlation_matrix(self.portfolio_data.drop('Portfolio',axis=1))

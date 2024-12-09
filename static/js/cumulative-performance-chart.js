@@ -10,6 +10,8 @@ var portfolioData = data.map(function(row) {
     return row[portfolioIndex] * 100; // Convert to percentage
 });
 
+var portfolioDataLength = portfolioData.length;
+
 // Function to calculate moving average
 function calculateMovingAverage(data, windowSize) {
     let ma = [];
@@ -25,8 +27,11 @@ function calculateMovingAverage(data, windowSize) {
     return ma;
 }
 
-// Calculate 30-period moving average
-const movingAverageData = calculateMovingAverage(portfolioData, 30);
+var movingAveragePeriod = (portfolioDataLength/8).toFixed(0);
+
+const movingAverageData = calculateMovingAverage(portfolioData, movingAveragePeriod);
+
+let movingAveragePeriodLabel = movingAveragePeriod;
 
 const ctx = document.getElementById('cumulative-performance-chart').getContext('2d');
 new Chart(ctx, {
@@ -43,7 +48,7 @@ new Chart(ctx, {
             pointRadius: 0 // Set pointRadius to 0 to hide the points
         },
         {
-            label: '30-Day Moving Average',
+            label: `${movingAveragePeriodLabel}-Day Moving Average`,  // Correct string interpolation with backticks
             data: movingAverageData,
             borderColor: 'rgba(255, 159, 64, 1)', // Orange color for MA line
             backgroundColor: 'rgba(255, 159, 64, 0.2)', // Light orange

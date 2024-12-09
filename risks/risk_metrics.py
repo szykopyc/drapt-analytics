@@ -43,3 +43,11 @@ def monte_carlo_simulation(returns, num_simulations: int = 1000, lookahead_days:
     mean_upper_lower_simulated_df.index = mean_upper_lower_simulated_df.index.strftime('%Y-%m-%d')
 
     return mean_upper_lower_simulated_df
+
+def correlation_matrix(data):
+    if isinstance(data, pd.DataFrame) and data.empty==False:
+        matrix = data.corr()
+        return matrix
+
+    else:
+        return False

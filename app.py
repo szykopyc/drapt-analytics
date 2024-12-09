@@ -133,6 +133,7 @@ def risk():
         risk_metric_data = None
         performanceData= None
         histogramData = None
+        correlationMatrixData = None
 
         noPortfolioError = False
 
@@ -188,6 +189,7 @@ def risk():
 
                 performanceData = portfolio.portfolio_data_cumsum.to_json(orient="split")
                 histogramData = portfolio.portfolio_data.to_json(orient="split")
+                correlationMatrixData = portfolio.compute_correlation_matrix().to_json()
 
 
         try:
@@ -209,10 +211,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrixData, risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrixData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
     
     else:
         session.clear()
