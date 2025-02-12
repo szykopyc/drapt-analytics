@@ -65,14 +65,14 @@ new Chart(ctx, {
             title: {
                 display: true,
                 text: 'Past Cumulative Performance',
-                color: "white",
+                color: "#2f4f4f",
                 font:{
                     weight: 'bold'
                 }
             },
             legend: {
                 labels: {
-                    color: "white", // Color for the legend text
+                    color: "#2f4f4f", // Color for the legend text
                 }
             },
             tooltip: {
@@ -89,22 +89,22 @@ new Chart(ctx, {
         scales: {
             y: {
                 ticks: {
-                    color: "white", // Color for Y-axis ticks
+                    color: "#2f4f4f", // Color for Y-axis ticks
                     callback: function(value) {
                         return value + '%'; // Append '%' to each tick label
                     }
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 }
             },
             x: {
                 ticks: {
-                    color: "white", // Color for X-axis ticks
+                    color: "#2f4f4f", // Color for X-axis ticks
                     maxTicksLimit: 10
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 }
             }
         },

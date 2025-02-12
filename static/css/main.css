@@ -11,7 +11,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: auto; /* Enable scrolling */
-    background-color: #121212;
+    background-color: #FAFAFA;
 }
 
 /* this is the header/nav section */
@@ -24,7 +24,7 @@ header nav {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #1a1a1a;
+    background-color: #10263b;
 
     color: white;
 
@@ -51,7 +51,7 @@ header nav {
 
 .nav-text a {
     text-decoration: none;
-    color: #F700FF;
+    color: white;
 }
 
 /* header nav links */
@@ -71,16 +71,16 @@ header nav li a {
 }
 
 header nav li a:hover {
-    background-color: #F700FF;
+    background-color: #9BCBFF;
 }
 
 /* main flex container  */
 
 .main-flex-container {
-    background: #121212;
+    background: #fafafa;
     min-height: 96.2vh;
     padding-top: 100px;
-    color: white;
+    color: #2f4f4f;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,61 +94,19 @@ header nav li a:hover {
 .element-container {
     width: 80%;
     padding: 20px;
-    background-color: #121212;
-    border: 5px #5C305E solid;
+
+    border: 5px #10263b solid;
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 15px;
-    box-shadow: 0 5px 5px #5C305E;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.546);
 
     overflow: visible;
 }
 
-/* this code animates the border of an element container */
-
-.moving-rgb-border{
-    border: 5px solid transparent; /* Border will be animated with RGB glow */
-    box-shadow: none;
-    animation: rgbGlow 2s infinite alternate;
-}
-
-@keyframes rgbGlow {
-    0% {
-        border-color: red;
-    }
-    25% {
-        border-color: yellow;
-    }
-    50% {
-        border-color: green;
-    }
-    75% {
-        border-color: cyan;
-    }
-    100% {
-        border-color: blue;
-    }
-}
-
-.rgb-button-default {
-    background-color: #3b3f41;
-    padding: 10px;
-    color: white;
-    border: 1px white solid;
-    border-radius: 10%;
-    height: 37px;
-    width: 60px;
-    text-align: center;
-    margin-left: auto;
-}
-
-.rgb-button-toggle {
-    background-image: linear-gradient(to right, red, violet);
-    border: 1px white solid;
-}
 
 /* this modifies the content of the element container */
 
@@ -177,7 +135,7 @@ header nav li a:hover {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 80%;
+    width: 90%;
 }
 
 .element-container form input, select {
@@ -188,13 +146,13 @@ header nav li a:hover {
 }
 
 .element-container form .input-button:hover {
-    background-color: #F700FF;
+    background-color: #9BCBFF;
     color: white;
 }
 
 /* this code is specifically for the content inside the element containers */
 .element {
-    background-color: #1a1a1a;
+    background-color: #fafafa;
 
     display: flex;
     justify-content: space-between;
@@ -204,14 +162,14 @@ header nav li a:hover {
     gap: 15px;
 
     padding: 20px;
-    border: 5px #5C305E solid;
+    border: 5px black solid;
     border-radius: 5px;
 
-    color: white;
+    color: #2f4f4f;
 }
 
 .element-image {
-    background-color: #1a1a1a;
+    background-color: #fafafa;
 
     display: flex;
     justify-content: space-between;
@@ -220,10 +178,10 @@ header nav li a:hover {
     gap: 15px;
 
     padding: 20px;
-    border: 5px #5C305E solid;
+    border: 5px black solid;
     border-radius: 5px;
 
-    color: white;
+    color: #2f4f4f;
 }
 
 .element-image img {
@@ -265,7 +223,7 @@ header nav li a:hover {
 
 /* element form styling within elements */
 .element-form {
-    background-color: #1a1a1a;
+    background-color: #fafafa;
 
     display: flex;
     justify-content: space-between;
@@ -275,10 +233,10 @@ header nav li a:hover {
     gap: 15px;
 
     padding: 20px;
-    border: 5px #5C305E solid;
+    border: 5px black solid;
     border-radius: 5px;
 
-    color: white;
+    color: #2f4f4f;
 }
 
 .element-form form{
@@ -286,7 +244,7 @@ header nav li a:hover {
 }
 
 .element-form .input-button:hover {
-    background-color: #5aa6c9;
+    background-color: #9BCBFF;
     color: white;
 }
 
@@ -296,7 +254,7 @@ header nav li a:hover {
 
 .element-form-settings {
     background-color: #1a1a1a;
-    border: 3px #C0C0C0 solid;
+    border: 3px black solid;
     border-radius: 1px;
     width: 100%;
     display: flex;
@@ -332,20 +290,20 @@ header nav li a:hover {
 
 .element-table {
     border-spacing: 0;
-    background-color: #2b2b2b;
+    background-color: #fafafa;
     width: 90%;
     padding: 0;  /* Remove or reduce padding */
-    border: 5px #5C305E solid;
+    border: 3px black solid;
     border-radius: 5px;
-    color: white;
+    color: #2f4f4f;
 }
 
 .element-table th {
     border: 1px solid white;
     padding: 0.4em;
-    background-color: white;
+    background-color: green;
     text-align: left;
-    color: #292d2f;
+    color: white;
     border-radius: 0px;
 }
 
@@ -439,16 +397,16 @@ header nav li a:hover {
 /* element table code */
 
 .element-table th {
-    border: 1px solid white;
+    border: 1px solid black;
     padding: 0.4em;
-    background-color: white;
+    background-color: rgb(140, 140, 140);
     text-align: left;
-    color: #292d2f;
+    color: black;
     border-radius: 0px;
 }
 
 .element-table td {
-    border: 1px solid white;
+    border: 1px solid black;
     padding: 0.3em;
     text-align: left;
     border-radius: 0px;
@@ -556,7 +514,7 @@ header nav li a:hover {
 }
 
 .element-risk-chart {
-    background-color: #1a1a1a;
+    background-color: #fafafa;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -564,10 +522,11 @@ header nav li a:hover {
     width: 90%;
     gap: 15px;
     padding: 20px;
-    border: 5px #5C305E solid;
+    border: 5px black solid;
     border-radius: 5px;
-    color: white;
+    color: #2f4f4f;
 }
+
 
 @media (max-width: 1000px) {
     .element-risk-chart{

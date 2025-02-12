@@ -150,10 +150,11 @@
                             <th>Volatility (D)</th>
                             <th>Volatility (W)</th>
                             <th>Volatility (M)</th>
-                            <th>Variance</th>
+                            <th>Beta</th>
                             <th>Sharpe Ratio</th>
                             <th>VaR 95</th>
                             <th>VaR 99</th>
+                            <th>Skew</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,10 +162,11 @@
                             <td>{{ (risk_metric_data[0] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[1] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[2] | float * 100) | round(2) }}%</td>
-                            <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
-                            <td>{{ risk_metric_data[4] | round(2) }}</td>
+                            <td>{{ risk_metric_data[3] | round(2) }}</td>
+                            <td>{{ risk_metric_data[4] | round(3) }}</td>
                             <td>{{ (risk_metric_data[5] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
+                            <td>{{ risk_metric_data[7] | round(3) }}</td>
                         </tr>
                     </tbody>
                 </table>

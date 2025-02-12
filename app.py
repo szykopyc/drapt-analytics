@@ -177,8 +177,10 @@ def risk():
                 portfolio_sharpe = portfolio.compute_sharpe()
                 portfolio_var95 = portfolio.calculate_var(0.95)
                 portfolio_var99 = portfolio.calculate_var(0.99)
+                portfolio_beta = portfolio.beta
+                portfolio_skewness = portfolio.skewness
 
-                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, portfolio_variance, portfolio_sharpe, portfolio_var95, portfolio_var99]
+                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness]
 
                 if enable_monte_carlo_sim:
                     monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)

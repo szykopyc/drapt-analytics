@@ -1,0 +1,29 @@
+"filename", "language", "HTML", "Python", "JavaScript", "CSS", "CSV", "pip requirements", "Markdown", "comment", "blank", "total"
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/README.md", "Markdown", 0, 0, 0, 0, 0, 0, 8, 0, 2, 10
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/app.py", "Python", 0, 295, 0, 0, 0, 0, 0, 18, 95, 408
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/__init__.py", "Python", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/loginManager.py", "Python", 0, 71, 0, 0, 0, 0, 0, 3, 20, 94
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/portfolioManager.py", "Python", 0, 119, 0, 0, 0, 0, 0, 1, 37, 157
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/design-notes/colour-scheme.csv", "CSV", 0, 0, 0, 0, 16, 0, 0, 0, 0, 16
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/requirements.txt", "pip requirements", 0, 0, 0, 0, 0, 40, 0, 0, 1, 41
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/__init__.py", "Python", 0, 0, 0, 0, 0, 0, 0, 0, 2, 2
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/data_fetcher.py", "Python", 0, 19, 0, 0, 0, 0, 0, 2, 3, 24
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/portfolio.py", "Python", 0, 42, 0, 0, 0, 0, 0, 0, 20, 62
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/risk_metrics.py", "Python", 0, 30, 0, 0, 0, 0, 0, 9, 14, 53
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/css/main.css", "CSS", 0, 0, 0, 554, 0, 0, 0, 21, 119, 694
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/confirm-delete.js", "JavaScript", 0, 0, 22, 0, 0, 0, 0, 5, 3, 30
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/correlation-matrix-figure.js", "JavaScript", 0, 0, 118, 0, 0, 0, 0, 8, 10, 136
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/cumulative-performance-chart.js", "JavaScript", 0, 0, 108, 0, 0, 0, 0, 2, 8, 118
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/custom-portfolio-table.js", "JavaScript", 0, 0, 121, 0, 0, 0, 0, 1, 20, 142
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/historical-data-slider.js", "JavaScript", 0, 0, 10, 0, 0, 0, 0, 3, 2, 15
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/monte-carlo-simulation-chart.js", "JavaScript", 0, 0, 104, 0, 0, 0, 0, 0, 9, 113
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/returns-histogram.js", "JavaScript", 0, 0, 101, 0, 0, 0, 0, 4, 9, 114
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/show-risk-settings.js", "JavaScript", 0, 0, 19, 0, 0, 0, 0, 7, 2, 28
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/toggle.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 0, 1, 12
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/warn-screen-size.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 0, 2, 8
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/admin_panel.html", "HTML", 125, 0, 0, 0, 0, 0, 0, 0, 3, 128
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/create.html", "HTML", 61, 0, 0, 0, 0, 0, 0, 0, 0, 61
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/home.html", "HTML", 77, 0, 0, 0, 0, 0, 0, 0, 3, 80
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/index.html", "HTML", 84, 0, 0, 0, 0, 0, 0, 0, 1, 85
+"/Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/risk.html", "HTML", 184, 0, 0, 0, 0, 0, 0, 1, 1, 186
+"Total", "-", 531, 576, 620, 554, 16, 40, 8, 85, 388, 2818

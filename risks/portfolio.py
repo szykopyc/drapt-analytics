@@ -8,8 +8,12 @@ class Portfolio:
         self.tickers_and_weights = tickers_and_weights
         self.lookback_days = lookback_days
         self.yearly_risk_free_rate = yearly_risk_free_rate
+        
+        benchmark_ticker= ["^GSPC"]
+        benchmarkFetcher = data.DataFetcher(benchmark_ticker,self.lookback_days)
+        benchmarkData = benchmarkFetcher.get_data()
 
-        self.daily_risk_free_rate = self.yearly_risk_free_rate / 252
+        self.daily_risk_free_rate = (1 + self.yearly_risk_free_rate) ** (1/252) - 1
 
         self.portfolio_data = pd.DataFrame()
         self.portfolio_data_cumsum = None
@@ -18,8 +22,6 @@ class Portfolio:
 
         for i in self.tickers_and_weights:
             tickers.append(i[0])
-
-        print(tickers)
 
         dataFetcherInstance = data.DataFetcher(tickers, self.lookback_days)
         self.portfolio_data = dataFetcherInstance.get_data()
@@ -34,6 +36,15 @@ class Portfolio:
 
         self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index.strftime('%Y-%m-%d')
 
+
+        self.beta = self.portfolio_data['Portfolio'].var()/benchmarkData.var()
+        self.beta = self.beta.iloc[0]
+
+        self.skewness = self.portfolio_data['Portfolio'].skew()
+        print("Skewness:")
+        print(self.skewness)
+
+
     def compute_volatility(self):
         return self.portfolio_data['Portfolio'].std()
 
@@ -41,16 +52,21 @@ class Portfolio:
         return self.portfolio_data['Portfolio'].var()
 
     def compute_sharpe(self):
-        mean_daily_return = self.portfolio_data['Portfolio'].mean()
-        daily_volatility = self.portfolio_data['Portfolio'].std()
+        mean_daily_return = self.portfolio_data['Portfolio'].mean()  # Assume this is annual returns
+        annual_return = (1 + mean_daily_return) ** 252 - 1
+        daily_volatility = self.portfolio_data['Portfolio'].std(ddof=1)
+        annual_volatility = daily_volatility * (252 ** 0.5)  # Annualize the daily volatility
 
-        excess_return = mean_daily_return - self.daily_risk_free_rate
+        excess_return = annual_return - self.yearly_risk_free_rate  # No conversion needed
 
-        sharpe_ratio = excess_return / daily_volatility
-        annualized_sharpe_ratio = sharpe_ratio * np.sqrt(252)  # Annualize the Sharpe ratio
+        print(f"Mean Annual Return: {annual_return}")
+        print(f"Annual Risk-Free Rate: {self.yearly_risk_free_rate}")
+        print(f"Annual Volatility: {annual_volatility}")
 
-        return annualized_sharpe_ratio
-    
+        sharpe_ratio = excess_return / annual_volatility  # No need to multiply by sqrt(252)
+
+        return sharpe_ratio
+        
     def simulate_monte_carlo(self, num_simulations: int=1000, lookahead_days:int = 100, initial_value:float = 100):
         return risk_metrics.monte_carlo_simulation(self.portfolio_data['Portfolio'], num_simulations=num_simulations,lookahead_days=lookahead_days,initial_value=initial_value)
     

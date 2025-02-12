@@ -59,14 +59,14 @@ const histogramChart = new Chart(ctx3, {
             title: {
                 display: true,
                 text: 'Portfolio Daily Returns Histogram',
-                color: "white",
+                color: "#2f4f4f",
                 font: {
                     weight: 'bold'
                 }
             },
             legend: {
                 labels: {
-                    color: "white", // Color for the legend text
+                    color: "#2f4f4f", // Color for the legend text
                 }
             },
             tooltip: {
@@ -77,25 +77,25 @@ const histogramChart = new Chart(ctx3, {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    color: "white", // Color for Y-axis ticks
+                    color: "#2f4f4f", // Color for Y-axis ticks
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 },
                 title: {
                     display: true,
                     text: 'Frequency',
-                    color: "white"
+                    color: "#2f4f4f"
                 }
             },
             x: {
                 ticks: {
-                    color: "white", // Color for X-axis ticks
+                    color: "#2f4f4f", // Color for X-axis ticks
                     maxTicksLimit: 10
                     
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 },
                 title: {
                     display: true,

@@ -31,16 +31,16 @@ new Chart(ctx2, {
         datasets: [{
             label: 'Mean Simulated Performance',
             data: meanData,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: '#10263b',
+            backgroundColor: '#10263b',
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
             pointRadius: 0 // Set pointRadius to 0 to hide the points
         },{
             label: '+1 Standard Deviation',
             data: upperSDData,
-            borderColor: 'rgba(207, 255, 4, 1)',
-            backgroundColor: 'rgba(207, 255, 4, 0.2)',
+            borderColor: 'rgba(80, 203, 203, 0.2)',
+            backgroundColor: 'rgba(94, 239, 239, 0.2)',
             fill: false,
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
@@ -48,8 +48,8 @@ new Chart(ctx2, {
         },{
             label: '-1 Standard Deviation',
             data: lowerSDData,
-            borderColor: 'rgba(207, 255, 4, 1)',
-            backgroundColor: 'rgba(207, 255, 4, 0.2)',
+            borderColor: 'rgba(80, 203, 203, 0.2)',
+            backgroundColor: 'rgba(94, 239, 239, 0.2)',
             fill: '-1',
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
@@ -63,7 +63,7 @@ new Chart(ctx2, {
             title: {
                 display: true,
                 text: 'Monte Carlo Simulated Portfolio Value',
-                color: "white",
+                color: '#2f4f4f',
                 font:{
                     weight: 'bold'
                 }
@@ -71,7 +71,7 @@ new Chart(ctx2, {
 
             legend: {
                 labels: {
-                    color: "white", // Color for the legend text
+                    color: '#2f4f4f', // Color for the legend text
                 }
             },
             tooltip: {
@@ -88,18 +88,18 @@ new Chart(ctx2, {
         scales: {
             y: {
                 ticks: {
-                    color: "white" // Color for Y-axis ticks
+                    color: '#2f4f4f', // Color for Y-axis ticks
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 }
             },
             x: {
                 ticks: {
-                    color: "white", // Color for X-axis ticks
+                    color: "#2f4f4f", // Color for X-axis ticks
                 },
                 grid: {
-                    color: "rgba(255,255,255,0.1)"
+                    color: "rgba(47,79,79,0.1)"
                 }
             }
         },
