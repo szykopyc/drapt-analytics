@@ -1,0 +1,29 @@
+"filename", "language", "HTML", "Python", "JavaScript", "Markdown", "pip requirements", "CSV", "CSS", "comment", "blank", "total"
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/README.md", "Markdown", 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/app.py", "Python", 0, 297, 0, 0, 0, 0, 0, 18, 95, 410
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/__init__.py", "Python", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/loginManager.py", "Python", 0, 71, 0, 0, 0, 0, 0, 3, 20, 94
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/portfolioManager.py", "Python", 0, 119, 0, 0, 0, 0, 0, 1, 37, 157
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/design-notes/colour-scheme.csv", "CSV", 0, 0, 0, 0, 0, 16, 0, 0, 0, 16
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/requirements.txt", "pip requirements", 0, 0, 0, 0, 40, 0, 0, 0, 1, 41
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/__init__.py", "Python", 0, 0, 0, 0, 0, 0, 0, 0, 2, 2
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/data_fetcher.py", "Python", 0, 19, 0, 0, 0, 0, 0, 2, 3, 24
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/portfolio.py", "Python", 0, 53, 0, 0, 0, 0, 0, 0, 25, 78
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/risk_metrics.py", "Python", 0, 30, 0, 0, 0, 0, 0, 9, 14, 53
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/css/main.css", "CSS", 0, 0, 0, 0, 0, 0, 516, 20, 117, 653
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/confirm-delete.js", "JavaScript", 0, 0, 22, 0, 0, 0, 0, 5, 3, 30
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/correlation-matrix-figure.js", "JavaScript", 0, 0, 115, 0, 0, 0, 0, 0, 9, 124
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/cumulative-performance-chart.js", "JavaScript", 0, 0, 108, 0, 0, 0, 0, 2, 8, 118
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/custom-portfolio-table.js", "JavaScript", 0, 0, 121, 0, 0, 0, 0, 1, 20, 142
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/historical-data-slider.js", "JavaScript", 0, 0, 10, 0, 0, 0, 0, 3, 2, 15
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/monte-carlo-simulation-chart.js", "JavaScript", 0, 0, 104, 0, 0, 0, 0, 0, 9, 113
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/returns-histogram.js", "JavaScript", 0, 0, 101, 0, 0, 0, 0, 4, 9, 114
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/show-risk-settings.js", "JavaScript", 0, 0, 19, 0, 0, 0, 0, 7, 2, 28
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/toggle.js", "JavaScript", 0, 0, 11, 0, 0, 0, 0, 0, 1, 12
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/warn-screen-size.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 0, 2, 8
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/admin_panel.html", "HTML", 125, 0, 0, 0, 0, 0, 0, 0, 3, 128
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/create.html", "HTML", 61, 0, 0, 0, 0, 0, 0, 0, 0, 61
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/home.html", "HTML", 77, 0, 0, 0, 0, 0, 0, 0, 3, 80
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/index.html", "HTML", 84, 0, 0, 0, 0, 0, 0, 0, 1, 85
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/risk.html", "HTML", 186, 0, 0, 0, 0, 0, 0, 1, 1, 188
+"Total", "-", 533, 589, 617, 8, 40, 16, 516, 76, 390, 2785

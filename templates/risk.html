@@ -17,12 +17,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <header>
         <nav>
-            <img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt=""> 
-            <p class="nav-text"><a href="{{ url_for('home') }}">DRAP-T</a></p>
+            {% if enable_nefs_logo == True %}<img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt="">{% endif %}
+            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/DRAP-T_logo_wide.png') }}" alt=""></a>
             <ul>
                 <li><a href="{{ url_for('risk') }}">RISK</a></li>
                 <li><a href="{{ url_for('performance') }}">PERF</a></li>
@@ -38,7 +39,8 @@
     <div class="main-flex-container">
         <div class="element-container" id="intro-container">
             <h1>Welcome to risk</h1>
-            <p>This is where you will be able to simulate your portfolio risk under different situations, using our interactive data processing and visualisation platform.</p>
+            <p>This is where you will be able to analyse your portfolio risk with a variety of metrics, using up to 5 years of historical asset price data. </p>
+            <!--
             <div class="element">
                 <div class="element-risk-image-grid">
                     <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/python-logo.webp') }}" alt=""></div>
@@ -47,10 +49,11 @@
                     <div class="element-risk-image-grid-item"><img src="{{ url_for('static', filename='images/chart-js-logo.png') }}" alt=""></div>
                 </div>
             </div>
+            -->
         </div>
         <div class="element-container">
             <div class="element-form">
-                <h3>Review your team's portfolio risk, or enter custom portfolio</h3>
+                <h3>Review portfolio risk, or enter custom portfolio</h3>
                 <form action="" method="post" autocomplete="off">
                     <select name="portfolio_name" id="portfolio-selector">
                         <option value="" disabled selected>Select portfolio</option>
@@ -113,11 +116,14 @@
         {% if monteCarloData or risk_metric_data %}
         <div class="element-container">
             <h1>{{portfolio_name}}'s Risk</h1>
-            <p>
+            <p>Successfully analysed <b>{{portfolio_name}}</b> using {{lookback_period}} of data, the portfolio has returned {{(totalReturnMetric | float * 100 ) | round(2) }}% over {{ lookback_period}}.</p>
+            <button id="download-pdf" class="input-button">Download PDF report of this page</button>
+
+            <!--<p>
                 {% for i in portfolio_tickers_and_weights %}
                     {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
                 {% endfor %}
-            </p>
+            </p>-->
             {% if monteCarloData%}
             <div class="element-risk-chart">
                 <div class="element-risk-tool">
@@ -129,11 +135,21 @@
                 <div class="element-risk-tool">
                     <h1>Asset Correlation Matrix</h1>
                     <canvas id="correlation-matrix-figure"></canvas>
+                    <p>Most correlated assets:
+                        {% for i in correlationMatrixMostCorrelated %}
+                            {{ i[0] }} - {{ i[1] }} ({{ i[2] }}){% if loop.index!=loop.length%}, {% endif %} 
+                        {% endfor %}
+                    </p>
+                    <p>Least correlated assets:
+                        {% for i in correlationMatrixLeastCorrelated | reverse %}
+                            {{ i[0] }} - {{ i[1] }} ({{ i[2] }}){% if loop.index!=loop.length%}, {% endif %} 
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
             <div class="element-risk-chart">
                 <div class="element-risk-tool">
-                    <h2>Past Performance Data</h2>
+                    <h2>Past Performance Chart</h2>
                     <canvas id="cumulative-performance-chart" width="400" height="400"></canvas>
                 </div>
                 <div class="element-risk-tool">
@@ -150,6 +166,7 @@
                             <th>Volatility (D)</th>
                             <th>Volatility (W)</th>
                             <th>Volatility (M)</th>
+                            <th>Jensen's Alpha (A)</th>
                             <th>Beta</th>
                             <th>Sharpe Ratio</th>
                             <th>VaR 95</th>
@@ -162,11 +179,12 @@
                             <td>{{ (risk_metric_data[0] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[1] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[2] | float * 100) | round(2) }}%</td>
-                            <td>{{ risk_metric_data[3] | round(2) }}</td>
-                            <td>{{ risk_metric_data[4] | round(3) }}</td>
-                            <td>{{ (risk_metric_data[5] | float * 100) | round(2) }}%</td>
+                            <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
+                            <td>{{ risk_metric_data[4] | round(2) }}</td>
+                            <td>{{ risk_metric_data[5] | round(3) }}</td>
                             <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
-                            <td>{{ risk_metric_data[7] | round(3) }}</td>
+                            <td>{{ (risk_metric_data[7] | float * 100) | round(2) }}%</td>
+                            <td>{{ risk_metric_data[8] | round(3) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -182,7 +200,27 @@
         var correlationMatrixData = {{correlationMatrixData | tojson}};
     </script>
     <footer>
-        <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>
+        <h3>Copyright Szymon Kopycinski 2024-2025</h3>
     </footer>
+    <script>
+        document.getElementById('download-pdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            // Grab the content from the Monte Carlo data div
+            const content = document.querySelector('.element-container');
+            
+            // Add the content to the PDF (you can adjust this to suit the styling you want)
+            doc.html(content, {
+                callback: function (doc) {
+                    // Save the generated PDF with a name
+                    doc.save('risk-analysis-summary.pdf');
+                },
+                margin: [10, 10, 10, 10],
+                x: 10,
+                y: 10
+            });
+        });
+    </script>
 </body>
 </html>

@@ -44,10 +44,29 @@ def monte_carlo_simulation(returns, num_simulations: int = 1000, lookahead_days:
 
     return mean_upper_lower_simulated_df
 
+
 def correlation_matrix(data):
-    if isinstance(data, pd.DataFrame) and data.empty==False:
+    if isinstance(data, pd.DataFrame) and not data.empty:
         matrix = data.corr()
-        return matrix
+
+        # Rename index and columns to avoid conflicts
+        matrix.index.name = "Asset 1"
+        matrix.columns.name = "Asset 2"
+
+        # Convert matrix to long format
+        corr_pairs = matrix.stack().reset_index()
+
+        # Rename columns for clarity
+        corr_pairs.columns = ['Asset 1', 'Asset 2', 'Correlation']
+
+        # Remove self-correlations (where Asset 1 == Asset 2)
+        corr_pairs = corr_pairs[corr_pairs['Asset 1'] != corr_pairs['Asset 2']]
+
+        # Sort by absolute correlation to find the most and least correlated pairs
+        most_correlated = corr_pairs.sort_values(by='Correlation', ascending=False).head(5)
+        least_correlated = corr_pairs.sort_values(by='Correlation', ascending=True).head(5)
+
+        return matrix, most_correlated, least_correlated
 
     else:
-        return False
+        return None, None, None  # Handle case where input data is invalid

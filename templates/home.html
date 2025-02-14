@@ -9,8 +9,8 @@
 <body>
     <header>
         <nav>
-            <img class="nav-logo" src="{{url_for('static',filename='images/NEFSIF_NAV_LOGO.png')}}" alt=""> 
-            <p class="nav-text"><a href="{{url_for('home')}}">DRAP-T</a></p>
+            {% if enable_nefs_logo == True %}<img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt="">{% endif %}
+            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/DRAP-T_logo_wide.png') }}" alt=""></a>
             <ul>
                 <li><a href="{{url_for('risk')}}">RISK</a></li>
                 <li><a href="{{url_for('performance')}}">PERF</a></li>
@@ -74,7 +74,7 @@
         </div>
     </div>
     <footer>
-        <h3>Copyright Szymon Kopycinski, NEFSIF 2024</h3>
+        <h3>Copyright Szymon Kopycinski 2024-2025</h3>
     </footer>
 </body>
 </html>

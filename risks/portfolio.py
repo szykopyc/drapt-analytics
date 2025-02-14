@@ -40,9 +40,12 @@ class Portfolio:
         self.beta = self.portfolio_data['Portfolio'].var()/benchmarkData.var()
         self.beta = self.beta.iloc[0]
 
+        R_p = self.portfolio_data['Portfolio'].mean() * 252  # Annualized portfolio return
+        R_m = benchmarkData.dropna().mean() * 252  # Annualized market return
+
+        self.jensens_alpha = R_p - (self.yearly_risk_free_rate + self.beta * (R_m - self.yearly_risk_free_rate))
+        self.jensens_alpha=self.jensens_alpha.iloc[-1]
         self.skewness = self.portfolio_data['Portfolio'].skew()
-        print("Skewness:")
-        print(self.skewness)
 
 
     def compute_volatility(self):

@@ -17,6 +17,7 @@ import uuid
 import risks.portfolio
 import json
 import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True # delete this in production
@@ -36,6 +37,8 @@ login_verification_list_of_worded_numbers = [
 ]
 
 active_sessions = {}
+
+enable_nefs_logo = False
 
 # ----- pages 
 
@@ -99,17 +102,17 @@ def index():
 
     # Display verification numbers
     verification_list = [verification_worded_number, verification_second_number]
-    return render_template("index.html", verification_list=verification_list, current_time=time.time())
+    return render_template("index.html", verification_list=verification_list, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
 
 
 @app.route("/home")
 def home():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True, current_time=time.time())
+            return render_template("home.html",admin=True, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
         
         else:
-            return render_template("home.html",admin=False, current_time=time.time())
+            return render_template("home.html",admin=False, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
     
     else:
         session.clear()
@@ -133,15 +136,51 @@ def risk():
         risk_metric_data = None
         performanceData= None
         histogramData = None
-        correlationMatrixData = None
+        correlationMatrix = None
+        correlationMatrixMostCorrelated = None
+        correlationMatrixLeastCorrelated = None
+
+        totalReturnMetric = None
 
         noPortfolioError = False
+
+        lookback_period=None
+
+        risk_free_rates = {
+            1: 0.0450,
+            2: 0.0425,
+            3: 0.0400,
+            4: 0.0375,
+            5: 0.0355
+        }
+
+        risk_free_rate = 0
+
+        jensenAlpha = None
 
         if request.method == "POST":
             portfolio_name = request.form.get("portfolio_name")
 
-            lookback_days = 365* float(request.form.get("historical-data-range"))
-            lookback_days = round(lookback_days,0)
+            lookback_days = 365 * float(request.form.get("historical-data-range"))
+            lookback_days = round(lookback_days, 0)
+
+            # Convert to years without rounding
+            lookback_years = lookback_days / 365  
+
+            # Determine lookback period display format
+            if lookback_years >= 1:
+                lookback_period = f"{lookback_years:.2f} years"
+                if lookback_years == 1:
+                    lookback_period = "1 year"
+            else:
+                lookback_period = f"{int(lookback_days)} days"
+
+            # Find the largest available risk-free period that does not exceed lookback_years
+            available_periods = sorted(risk_free_rates.keys())  # [1, 2, 3, 4, 5]
+            chosen_period = max(p for p in available_periods if p <= lookback_years)
+
+            # Assign correct risk-free rate
+            risk_free_rate = risk_free_rates[chosen_period]
 
             enable_monte_carlo_sim = request.form.get("enable-monte-carlo")
             if enable_monte_carlo_sim =="enable-monte-carlo":
@@ -168,7 +207,7 @@ def risk():
                 
                 portfolio_tickers_and_weights = selected_portfolio_data[0][3]
 
-                portfolio = risks.portfolio.Portfolio(portfolio_tickers_and_weights,lookback_days,0.04)
+                portfolio = risks.portfolio.Portfolio(portfolio_tickers_and_weights,lookback_days,risk_free_rate)
 
                 portfolio_volatility_daily = portfolio.compute_volatility()
                 portfolio_volatility_weekly = portfolio.compute_volatility() * np.sqrt(5)
@@ -180,7 +219,9 @@ def risk():
                 portfolio_beta = portfolio.beta
                 portfolio_skewness = portfolio.skewness
 
-                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness]
+                jensenAlpha=portfolio.jensens_alpha
+
+                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, jensenAlpha,portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness]
 
                 if enable_monte_carlo_sim:
                     monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)
@@ -191,7 +232,39 @@ def risk():
 
                 performanceData = portfolio.portfolio_data_cumsum.to_json(orient="split")
                 histogramData = portfolio.portfolio_data.to_json(orient="split")
-                correlationMatrixData = portfolio.compute_correlation_matrix().to_json()
+                correlationMatrixData = portfolio.compute_correlation_matrix()
+                correlationMatrix = correlationMatrixData[0].to_json()
+                correlationMatrixMostCorrelated = correlationMatrixData[1]
+                correlationMatrixLeastCorrelated = correlationMatrixData[2]
+
+                totalReturnMetric = portfolio.portfolio_data_cumsum['Portfolio'].iloc[-1]
+
+                def format_correlation_data(df, limit_to_top=3):
+                    if isinstance(df, pd.DataFrame) and not df.empty:
+                        # Sort each pair of 'Asset 1' and 'Asset 2'
+                        sorted_assets = df[['Asset 1', 'Asset 2']].apply(lambda row: sorted([row['Asset 1'], row['Asset 2']]), axis=1)
+                        
+                        # Assign the sorted values back to the dataframe
+                        df[['Asset 1', 'Asset 2']] = pd.DataFrame(sorted_assets.tolist(), index=df.index)
+
+                        # Filter out duplicate pairs (e.g., both CSGOLD.SW-JPM and JPM-CSGOLD.SW)
+                        df_unique = df.drop_duplicates(subset=['Asset 1', 'Asset 2'])
+
+                        # Round the correlation values to 2 decimal places
+                        df_unique['Correlation'] = df_unique['Correlation'].round(2)
+
+                        # Take only the top 'limit_to_top' rows based on the magnitude of the correlation (both positive and negative)
+                        top_correlations = df_unique.nlargest(limit_to_top, 'Correlation', 'all')
+
+                        # Convert the DataFrame to a list of lists (2D array)
+                        correlation_array = top_correlations[['Asset 1', 'Asset 2', 'Correlation']].values.tolist()
+
+                        return correlation_array
+                    else:
+                        return []
+
+                correlationMatrixMostCorrelated=format_correlation_data(correlationMatrixMostCorrelated)
+                correlationMatrixLeastCorrelated=format_correlation_data(correlationMatrixLeastCorrelated)
 
 
         try:
@@ -213,10 +286,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrixData, risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix, correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrixData,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix,correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo)
     
     else:
         session.clear()
@@ -226,10 +299,10 @@ def risk():
 def performance():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True, current_time=time.time())
+            return render_template("home.html",admin=True, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
         
         else:
-            return render_template("home.html",admin=False, current_time=time.time())
+            return render_template("home.html",admin=False, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
     
     else:
         session.clear()
@@ -239,10 +312,10 @@ def performance():
 def profile():
     if session.get("logged_in")==True and session.get("sid") in active_sessions:
         if session.get("adminLoggedIn") ==True:
-            return render_template("home.html",admin=True, current_time=time.time())
+            return render_template("home.html",admin=True, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
         
         else:
-            return render_template("home.html",admin=False, current_time=time.time())
+            return render_template("home.html",admin=False, current_time=time.time(),enable_nefs_logo=enable_nefs_logo)
     
     else:
         session.clear()
@@ -258,7 +331,7 @@ def admin_panel():
             userCreds = fetchAllCreds()
             userScope = session.get("userPermissionScope")
 
-            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds, current_time=time.time(), admin=True)
+            return render_template("admin_panel.html", userScope=userScope,active_sessions=active_sessions, session=session, userCreds=userCreds, current_time=time.time(), admin=True,enable_nefs_logo=enable_nefs_logo)
         
         else:
             session.clear()

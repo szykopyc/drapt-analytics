@@ -1,0 +1,104 @@
+Date : 2025-02-12 10:08:49
+Directory : /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version
+Total : 54 files,  -26 codes, -9 comments, 2 blanks, all -33 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         16 |         13 |          0 |          5 |         18 |
+| HTML             |         10 |          2 |          0 |          0 |          2 |
+| Markdown         |          2 |          0 |          0 |          0 |          0 |
+| pip requirements |          2 |          0 |          0 |          0 |          0 |
+| CSV              |          2 |          0 |          0 |          0 |          0 |
+| JavaScript       |         20 |         -3 |         -8 |         -1 |        -12 |
+| CSS              |          2 |        -38 |         -1 |         -2 |        -41 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                   |         54 |        -26 |         -9 |          2 |        -33 |
+| . (Files)                                                                                                                           |          3 |        345 |         18 |         98 |        461 |
+| ..                                                                                                                                  |         27 |     -2,345 |        -85 |       -388 |     -2,818 |
+| ../..                                                                                                                               |         27 |     -2,345 |        -85 |       -388 |     -2,818 |
+| ../../Unfinished Projects                                                                                                           |         27 |     -2,345 |        -85 |       -388 |     -2,818 |
+| ../../Unfinished Projects/Risk Tool NEFSIF                                                                                          |         27 |     -2,345 |        -85 |       -388 |     -2,818 |
+| ../../Unfinished Projects/Risk Tool NEFSIF (Files)                                                                                  |          3 |       -343 |        -18 |        -98 |       -459 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/dbManagers                                                                               |          3 |       -190 |         -4 |        -58 |       -252 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/design-notes                                                                             |          1 |        -16 |          0 |          0 |        -16 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/risks                                                                                    |          4 |        -91 |        -11 |        -39 |       -141 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/static                                                                                   |         11 |     -1,174 |        -51 |       -185 |     -1,410 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/static/css                                                                               |          1 |       -554 |        -21 |       -119 |       -694 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/static/js                                                                                |         10 |       -620 |        -30 |        -66 |       -716 |
+| ../../Unfinished Projects/Risk Tool NEFSIF/templates                                                                                |          5 |       -531 |         -1 |         -8 |       -540 |
+| dbManagers                                                                                                                          |          3 |        190 |          4 |         58 |        252 |
+| design-notes                                                                                                                        |          1 |         16 |          0 |          0 |         16 |
+| risks                                                                                                                               |          4 |        102 |         11 |         44 |        157 |
+| static                                                                                                                              |         11 |      1,133 |         42 |        182 |      1,357 |
+| static/css                                                                                                                          |          1 |        516 |         20 |        117 |        653 |
+| static/js                                                                                                                           |         10 |        617 |         22 |         65 |        704 |
+| templates                                                                                                                           |          5 |        533 |          1 |          8 |        542 |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                                            | language         | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/README.md                                                 | Markdown         |          8 |          0 |          2 |         10 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/app.py                                                    | Python           |        297 |         18 |         95 |        410 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/__init__.py                                    | Python           |          0 |          0 |          1 |          1 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/loginManager.py                                | Python           |         71 |          3 |         20 |         94 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/portfolioManager.py                            | Python           |        119 |          1 |         37 |        157 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/design-notes/colour-scheme.csv                            | CSV              |         16 |          0 |          0 |         16 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/requirements.txt                                          | pip requirements |         40 |          0 |          1 |         41 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/__init__.py                                         | Python           |          0 |          0 |          2 |          2 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/data_fetcher.py                                     | Python           |         19 |          2 |          3 |         24 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/portfolio.py                                        | Python           |         53 |          0 |         25 |         78 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/risk_metrics.py                                     | Python           |         30 |          9 |         14 |         53 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/css/main.css                                       | CSS              |        516 |         20 |        117 |        653 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/confirm-delete.js                               | JavaScript       |         22 |          5 |          3 |         30 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/correlation-matrix-figure.js                    | JavaScript       |        115 |          0 |          9 |        124 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/cumulative-performance-chart.js                 | JavaScript       |        108 |          2 |          8 |        118 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/custom-portfolio-table.js                       | JavaScript       |        121 |          1 |         20 |        142 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/historical-data-slider.js                       | JavaScript       |         10 |          3 |          2 |         15 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/monte-carlo-simulation-chart.js                 | JavaScript       |        104 |          0 |          9 |        113 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/returns-histogram.js                            | JavaScript       |        101 |          4 |          9 |        114 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/show-risk-settings.js                           | JavaScript       |         19 |          7 |          2 |         28 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/toggle.js                                       | JavaScript       |         11 |          0 |          1 |         12 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/warn-screen-size.js                             | JavaScript       |          6 |          0 |          2 |          8 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/admin_panel.html                                | HTML             |        125 |          0 |          3 |        128 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/create.html                                     | HTML             |         61 |          0 |          0 |         61 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/home.html                                       | HTML             |         77 |          0 |          3 |         80 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/index.html                                      | HTML             |         84 |          0 |          1 |         85 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/risk.html                                       | HTML             |        186 |          1 |          1 |        188 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/README.md                                 | Markdown         |         -8 |          0 |         -2 |        -10 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/app.py                                    | Python           |       -295 |        -18 |        -95 |       -408 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/__init__.py                    | Python           |          0 |          0 |         -1 |         -1 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/loginManager.py                | Python           |        -71 |         -3 |        -20 |        -94 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/dbManagers/portfolioManager.py            | Python           |       -119 |         -1 |        -37 |       -157 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/design-notes/colour-scheme.csv            | CSV              |        -16 |          0 |          0 |        -16 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/requirements.txt                          | pip requirements |        -40 |          0 |         -1 |        -41 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/__init__.py                         | Python           |          0 |          0 |         -2 |         -2 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/data_fetcher.py                     | Python           |        -19 |         -2 |         -3 |        -24 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/portfolio.py                        | Python           |        -42 |          0 |        -20 |        -62 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/risks/risk_metrics.py                     | Python           |        -30 |         -9 |        -14 |        -53 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/css/main.css                       | CSS              |       -554 |        -21 |       -119 |       -694 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/confirm-delete.js               | JavaScript       |        -22 |         -5 |         -3 |        -30 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/correlation-matrix-figure.js    | JavaScript       |       -118 |         -8 |        -10 |       -136 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/cumulative-performance-chart.js | JavaScript       |       -108 |         -2 |         -8 |       -118 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/custom-portfolio-table.js       | JavaScript       |       -121 |         -1 |        -20 |       -142 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/historical-data-slider.js       | JavaScript       |        -10 |         -3 |         -2 |        -15 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/monte-carlo-simulation-chart.js | JavaScript       |       -104 |          0 |         -9 |       -113 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/returns-histogram.js            | JavaScript       |       -101 |         -4 |         -9 |       -114 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/show-risk-settings.js           | JavaScript       |        -19 |         -7 |         -2 |        -28 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/toggle.js                       | JavaScript       |        -11 |          0 |         -1 |        -12 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/static/js/warn-screen-size.js             | JavaScript       |         -6 |          0 |         -2 |         -8 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/admin_panel.html                | HTML             |       -125 |          0 |         -3 |       -128 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/create.html                     | HTML             |        -61 |          0 |          0 |        -61 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/home.html                       | HTML             |        -77 |          0 |         -3 |        -80 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/index.html                      | HTML             |        -84 |          0 |         -1 |        -85 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Unfinished Projects/Risk Tool NEFSIF/templates/risk.html                       | HTML             |       -184 |         -1 |         -1 |       -186 |
+| Total                                                                                                                               |                  |        -26 |         -9 |          2 |        -33 |
++-------------------------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
