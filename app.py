@@ -18,6 +18,7 @@ import risks.portfolio
 import json
 import numpy as np
 import pandas as pd
+import json
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True # delete this in production
@@ -139,6 +140,7 @@ def risk():
         correlationMatrix = None
         correlationMatrixMostCorrelated = None
         correlationMatrixLeastCorrelated = None
+        portfolio_rolling_vol = None
 
         totalReturnMetric = None
 
@@ -173,11 +175,16 @@ def risk():
                 if lookback_years == 1:
                     lookback_period = "1 year"
             else:
+                # Handle cases where lookback period is less than 1 year
                 lookback_period = f"{int(lookback_days)} days"
 
             # Find the largest available risk-free period that does not exceed lookback_years
-            available_periods = sorted(risk_free_rates.keys())  # [1, 2, 3, 4, 5]
-            chosen_period = max(p for p in available_periods if p <= lookback_years)
+            if lookback_years >= 1:
+                available_periods = sorted(risk_free_rates.keys())  # [1, 2, 3, 4, 5]
+                chosen_period = max(p for p in available_periods if p <= lookback_years)
+            else:
+                # If the lookback period is less than 1 year, pick the appropriate period based on available data
+                chosen_period = min(risk_free_rates.keys())  # Choose the smallest available period
 
             # Assign correct risk-free rate
             risk_free_rate = risk_free_rates[chosen_period]
@@ -220,6 +227,10 @@ def risk():
                 portfolio_skewness = portfolio.skewness
 
                 jensenAlpha=portfolio.jensens_alpha
+
+                portfolio_rolling_vol = portfolio.gen_rolling_volatility().to_json(orient='split')
+                # Convert the dictionary to JSON
+                # portfolio_rolling_vol = portfolio_rolling_vol.to_json(orient="split")
 
                 risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, jensenAlpha,portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness]
 
@@ -286,10 +297,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix, correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix, correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix,correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix,correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol)
     
     else:
         session.clear()

@@ -32,9 +32,13 @@ class Portfolio:
 
         self.portfolio_data.iloc[0] = 0
         self.portfolio_data = self.portfolio_data.dropna()
+
+        self.portfolio_data.index = self.portfolio_data.index.strftime('%Y-%m-%d')
+
+
         self.portfolio_data_cumsum = self.portfolio_data.cumsum()
 
-        self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index.strftime('%Y-%m-%d')
+        self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index
 
 
         self.beta = self.portfolio_data['Portfolio'].var()/benchmarkData.var()
@@ -78,3 +82,18 @@ class Portfolio:
     
     def compute_correlation_matrix(self):
         return risk_metrics.correlation_matrix(self.portfolio_data.drop('Portfolio',axis=1))
+    
+    def gen_rolling_volatility(self):
+        # Calculate rolling volatilities
+        rolling_volatility_30 = self.portfolio_data['Portfolio'].rolling(window=30, min_periods=1).std().dropna()
+        rolling_volatility_60 = self.portfolio_data['Portfolio'].rolling(window=60, min_periods=1).std().dropna()
+        rolling_volatility_125 = self.portfolio_data['Portfolio'].rolling(window=125, min_periods=1).std().dropna()
+        
+        # Concatenate the rolling volatility DataFrames
+        rolling_volatility = pd.concat([rolling_volatility_30, rolling_volatility_60, rolling_volatility_125], axis=1)
+        
+        # Rename the columns to match the rolling periods
+        rolling_volatility.columns = ['Rolling 30', 'Rolling 60', 'Rolling 125']
+        
+        return rolling_volatility
+

@@ -14,10 +14,10 @@
     <script src="{{ url_for('static', filename='js/custom-portfolio-table.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/historical-data-slider.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/show-risk-settings.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/rolling-volatility.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <header>
@@ -114,10 +114,9 @@
             {% endif %}
         </div>
         {% if monteCarloData or risk_metric_data %}
-        <div class="element-container">
+        <div class="element-container" id="risk-summary">
             <h1>{{portfolio_name}}'s Risk</h1>
             <p>Successfully analysed <b>{{portfolio_name}}</b> using {{lookback_period}} of data, the portfolio has returned {{(totalReturnMetric | float * 100 ) | round(2) }}% over {{ lookback_period}}.</p>
-            <button id="download-pdf" class="input-button">Download PDF report of this page</button>
 
             <!--<p>
                 {% for i in portfolio_tickers_and_weights %}
@@ -155,6 +154,12 @@
                 <div class="element-risk-tool">
                     <h2>Histogram of Historical Returns</h2>
                     <canvas id="histogramChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="element-risk-chart">
+                <div class="element-risk-tool">
+                    <h1>Rolling Volatility</h1>
+                    <canvas id="rolling-volatility-chart"></canvas>
                 </div>
             </div>
             {% endif %}
@@ -198,29 +203,10 @@
         var histogramData = {{ histogramData | tojson}};
         var performanceData = {{performanceData | tojson }};
         var correlationMatrixData = {{correlationMatrixData | tojson}};
+        var portfolio_rolling_vol = {{portfolio_rolling_vol | tojson }}
     </script>
     <footer>
         <h3>Copyright Szymon Kopycinski 2024-2025</h3>
     </footer>
-    <script>
-        document.getElementById('download-pdf').addEventListener('click', function () {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-    
-            // Grab the content from the Monte Carlo data div
-            const content = document.querySelector('.element-container');
-            
-            // Add the content to the PDF (you can adjust this to suit the styling you want)
-            doc.html(content, {
-                callback: function (doc) {
-                    // Save the generated PDF with a name
-                    doc.save('risk-analysis-summary.pdf');
-                },
-                margin: [10, 10, 10, 10],
-                x: 10,
-                y: 10
-            });
-        });
-    </script>
 </body>
 </html>
