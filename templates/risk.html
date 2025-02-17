@@ -174,6 +174,7 @@
                             <th>Jensen's Alpha (A)</th>
                             <th>Beta</th>
                             <th>Sharpe Ratio</th>
+                            <th>Sortino Ratio</th>
                             <th>VaR 95</th>
                             <th>VaR 99</th>
                             <th>Skew</th>
@@ -187,6 +188,7 @@
                             <td>{{ (risk_metric_data[3] | float * 100) | round(2) }}%</td>
                             <td>{{ risk_metric_data[4] | round(2) }}</td>
                             <td>{{ risk_metric_data[5] | round(3) }}</td>
+                            <td>{{ risk_metric_data[9] | round(3) }}</td>
                             <td>{{ (risk_metric_data[6] | float * 100) | round(2) }}%</td>
                             <td>{{ (risk_metric_data[7] | float * 100) | round(2) }}%</td>
                             <td>{{ risk_metric_data[8] | round(3) }}</td>

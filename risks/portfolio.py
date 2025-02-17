@@ -66,13 +66,30 @@ class Portfolio:
 
         excess_return = annual_return - self.yearly_risk_free_rate  # No conversion needed
 
-        print(f"Mean Annual Return: {annual_return}")
-        print(f"Annual Risk-Free Rate: {self.yearly_risk_free_rate}")
-        print(f"Annual Volatility: {annual_volatility}")
-
         sharpe_ratio = excess_return / annual_volatility  # No need to multiply by sqrt(252)
 
         return sharpe_ratio
+    
+    def compute_sortino(self):
+        mean_daily_return = self.portfolio_data['Portfolio'].mean()  # Assume this is daily returns
+        annual_return = (1 + mean_daily_return) ** 252 - 1
+        
+        # Calculate downside deviation (only negative daily returns)
+        negative_returns = self.portfolio_data['Portfolio'][self.portfolio_data['Portfolio'] < 0]
+        daily_downside_deviation = negative_returns.std(ddof=1)  # Sample std deviation of negative returns
+        annual_downside_deviation = daily_downside_deviation * (252 ** 0.5)  # Annualize the downside deviation
+
+        excess_return = annual_return - self.yearly_risk_free_rate  # No conversion needed
+
+        # Avoid division by zero
+        if annual_downside_deviation == 0:
+            return float('inf') if excess_return > 0 else float('-inf')
+
+        sortino_ratio = excess_return / annual_downside_deviation  # No sqrt(252) needed
+        print("Sortino ratio")
+        print(sortino_ratio)
+        return sortino_ratio
+
         
     def simulate_monte_carlo(self, num_simulations: int=1000, lookahead_days:int = 100, initial_value:float = 100):
         return risk_metrics.monte_carlo_simulation(self.portfolio_data['Portfolio'], num_simulations=num_simulations,lookahead_days=lookahead_days,initial_value=initial_value)

@@ -221,6 +221,7 @@ def risk():
                 portfolio_volatility_monthly = portfolio.compute_volatility() * np.sqrt(20)
                 portfolio_variance = portfolio.compute_variance()
                 portfolio_sharpe = portfolio.compute_sharpe()
+                portfolio_sortino = portfolio.compute_sortino()
                 portfolio_var95 = portfolio.calculate_var(0.95)
                 portfolio_var99 = portfolio.calculate_var(0.99)
                 portfolio_beta = portfolio.beta
@@ -232,7 +233,7 @@ def risk():
                 # Convert the dictionary to JSON
                 # portfolio_rolling_vol = portfolio_rolling_vol.to_json(orient="split")
 
-                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, jensenAlpha,portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness]
+                risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, jensenAlpha,portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness, portfolio_sortino]
 
                 if enable_monte_carlo_sim:
                     monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)
