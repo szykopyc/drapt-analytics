@@ -26,7 +26,9 @@
     <div class="main-flex-container">
         <div class="element-container" id="element-container">
             <h1>Welcome to DRAP-T</h1>
+            {% if enable_nefs_logo == True %}
             <p>The unofficial Dynamic Risk Analysis and Performance Tool used by the Nottingham Economics and Finance Society's <b>Investment Fund</b></p>
+            {% endif %}
         </div>
         <div class="element-container">
             <h2>What is DRAP-T?</h2>
@@ -61,6 +63,7 @@
                 </form>  
             </div>
         </div>
+        {% if enable_nefs_logo == True %}
         <div class="element-container">
             <h2>Sponsors</h2>
             <div class="sponsor-img-list">
@@ -75,6 +78,7 @@
                 <img src="{{ url_for('static',filename='images/PKF.avif')}}" alt="">
             </div>
         </div>
+        {% endif %}
     </div>
     <footer>
         <h3>Copyright Szymon Kopycinski 2024-2025</h3>

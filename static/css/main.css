@@ -311,22 +311,21 @@ header nav li a:hover {
     background-color: #fafafa;
     width: 90%;
     padding: 0;  /* Remove or reduce padding */
-    border: 3px black solid;
+    border: 3px rgb(21, 96, 130) solid;
     border-radius: 5px;
     color: #2f4f4f;
 }
 
 .element-table th {
-    border: 1px solid white;
+    border: 1px solid rgb(21, 96, 130);
     padding: 0.4em;
-    background-color: green;
     text-align: left;
     color: white;
     border-radius: 0px;
 }
 
 .element-table td {
-    border: 1px solid white;
+    border: 1px solid rgb(21, 96, 130);
     padding: 0.3em;
     text-align: left;
     border-radius: 0px;
@@ -415,16 +414,15 @@ header nav li a:hover {
 /* element table code */
 
 .element-table th {
-    border: 1px solid black;
+    border: 1px solid rgb(21, 96, 130);
     padding: 0.4em;
-    background-color: rgb(140, 140, 140);
     text-align: left;
     color: black;
     border-radius: 0px;
 }
 
 .element-table td {
-    border: 1px solid black;
+    border: 1px solid rgb(21, 96, 130);
     padding: 0.3em;
     text-align: left;
     border-radius: 0px;
@@ -540,7 +538,7 @@ header nav li a:hover {
     width: 90%;
     gap: 15px;
     padding: 20px;
-    border: 5px black solid;
+    border: 5px rgb(21, 96, 130) solid;
     border-radius: 5px;
     color: #2f4f4f;
 }

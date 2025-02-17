@@ -57,7 +57,7 @@
                 <img class="paragraph_image" src="{{url_for('static',filename='images/PLACEHOLDER_IMAGE_1.jpg')}}" alt="" width="600" height="400">
             </div>
         </div>
-
+        {% if enable_nefs_logo == True %}
         <div class="element-container">
             <h2>Discover opportunities</h2>
             <div class="element-clickable-grid">
@@ -72,6 +72,7 @@
                 <div class="element-clickable-grid-item"><a href="#"><img src="{{ url_for('static',filename='images/PKF.avif')}}" alt=""></a></div>
             </div>
         </div>
+        {% endif %}
     </div>
     <footer>
         <h3>Copyright Szymon Kopycinski 2024-2025</h3>
