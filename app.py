@@ -49,6 +49,7 @@ def index():
         username = request.form.get("username")
         password = request.form.get("password")
         userGroup = request.form.get("userGroup")
+        '''
         verification_input = request.form.get("verification")
 
         # Retrieve stored session values
@@ -62,6 +63,8 @@ def index():
             verification=False
             session.clear()
             session.modified = True  # Reset session on failure
+        '''
+        verification = True
 
         # Validate user credentials
         checkCredentialsQuery = checkCredentials(username, password, userGroup)

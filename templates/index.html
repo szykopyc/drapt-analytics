@@ -25,10 +25,8 @@
     </header>
     <div class="main-flex-container">
         <div class="element-container" id="element-container">
-            <h1>Welcome to DRAP-T</h1>
-            {% if enable_nefs_logo == True %}
-            <p>The unofficial Dynamic Risk Analysis and Performance Tool used by the Nottingham Economics and Finance Society's <b>Investment Fund</b></p>
-            {% endif %}
+            <h1>Welcome to DRAP-T</h1
+            <p>A project by Szymon Kopycinski, first-year Finance undergraduate at UoN</p>
         </div>
         <div class="element-container">
             <h2>What is DRAP-T?</h2>
@@ -57,8 +55,9 @@
                         <option value="usc">US & Canada</option>
                         <option value="other">Other</option>
                     </select>
+                    <!-- 
                     <input class="input_box" type="text" placeholder="Verification: What is {{verification_list[0]}} + {{verification_list[1]}}?" name="verification" value="{{
-                        request.form.username }}" autocomplete="off">
+                        request.form.username }}" autocomplete="off">-->
                     <input class="input-button" type="submit" value="Login">
                 </form>  
             </div>

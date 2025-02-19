@@ -107,6 +107,10 @@ header nav li a:hover {
     overflow: visible;
 }
 
+.element-container ul {
+    width: 90%;
+}
+
 
 /* this modifies the content of the element container */
 
@@ -353,14 +357,14 @@ header nav li a:hover {
 /* here is the code for the custom portfolio table */
 #custom-portfolio-table {
     border-spacing: 0;
-    background-color: #1a1a1a;
+    background-color: #fafafa;
     width: 100%;
 
     padding: 0px;
-    border: none;
+    border: 1px solid rgb(21, 96, 130);
     border-radius: 0px;
 
-    color: white;
+    color: #2f4f4f;
 
     overflow: scroll;
 }
@@ -378,8 +382,8 @@ header nav li a:hover {
     height: 100%;
     padding: 5px;
     font-family: monospace;
-    background-color: #292d2f;
-    color: white;
+    background-color: #fafafa;
+    color: #2f4f4f;
 
 }
 
@@ -388,8 +392,8 @@ header nav li a:hover {
     height: 100%;
     padding: 5px;
     font-family: monospace;
-    background-color: #292d2f;
-    color: white;
+    background-color: #fafafa;
+    color: #2f4f4f;
 }
 
 #custom-portfolio-table-actions button {
@@ -437,8 +441,8 @@ header nav li a:hover {
     height: 100%;
     padding: 5px;
     font-family: monospace;
-    background-color: #292d2f;
-    color: white;
+    background-color: #fafafa;
+    color: #2f4f4f;
 }
 
 .element-table td button:hover {
