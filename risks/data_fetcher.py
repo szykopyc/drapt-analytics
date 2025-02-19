@@ -14,7 +14,10 @@ class DataFetcher:
             # Download the data for the ticker
             data = yf.download(ticker, data_start_date)['Close']
             # Calculate cumulative percentage change
-            return data.pct_change()
+            pct_change = data.pct_change()
+            # Set extreme percentage changes (>100%) to 0
+            pct_change = pct_change.applymap(lambda x: 0 if abs(x) > 1 else x)
+            return pct_change
         except Exception as e:
             print(f"EXCEPTION | Error downloading data for {ticker}: {e}")
             return pd.Series(name=ticker)

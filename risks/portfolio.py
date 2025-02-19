@@ -37,6 +37,8 @@ class Portfolio:
 
 
         self.portfolio_data_cumsum = self.portfolio_data.cumsum()
+        with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+            print(self.portfolio_data)
 
         self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index
 
