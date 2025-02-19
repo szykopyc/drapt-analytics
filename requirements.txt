@@ -37,4 +37,4 @@ urllib3==2.2.3
 webencodings==0.5.1
 Werkzeug==3.0.6
 wheel==0.44.0
-yfinance==0.2.50
+yfinance==0.2.54
