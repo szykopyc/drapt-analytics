@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}">
-    <title>Risk | DRAP-T</title>
+    <title>Risk | Drap Analytics</title>
     <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/warn-screen-size.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/monte-carlo-stress.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/correlation-matrix-figure.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/returns-histogram.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/cumulative-performance-chart.js') }}" defer></script>
@@ -126,7 +127,7 @@
             {% if monteCarloData%}
             <div class="element-risk-chart">
                 <div class="element-risk-tool">
-                    <h1>Monte Carlo</h1>
+                    <h1>Monte Carlo (GBM)</h1>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
@@ -160,6 +161,13 @@
                 <div class="element-risk-tool">
                     <h1>Rolling Volatility</h1>
                     <canvas id="rolling-volatility-chart"></canvas>
+                </div>
+            </div>
+            <div class="element-risk-chart">
+                <div class="element-risk-tool">
+                    <h1>Monte Carlo Stress Test</h1>
+                    <p>Simulated portfolio under stressed conditions, where asset correlations rose by 70%, and volatility increased by 50%.</p>
+                    <canvas id="monte-carlo-stress"></canvas>
                 </div>
             </div>
             {% endif %}
@@ -202,10 +210,12 @@
     </div>
     <script>
         var monteCarloData = {{ monteCarloData | tojson }};
+        var monteCarloStressData = {{ monte_carlo_stress_test | tojson }};
         var histogramData = {{ histogramData | tojson}};
         var performanceData = {{performanceData | tojson }};
         var correlationMatrixData = {{correlationMatrixData | tojson}};
         var portfolio_rolling_vol = {{portfolio_rolling_vol | tojson }}
+
     </script>
     <footer>
         <h3>Copyright Szymon Kopycinski 2024-2025</h3>

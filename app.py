@@ -16,8 +16,8 @@ import threading
 import uuid
 import risks.portfolio
 import json
-import numpy as np
-import pandas as pd
+import numpy as np # type: ignore
+import pandas as pd # type: ignore
 import json
 
 app = Flask(__name__)
@@ -144,6 +144,7 @@ def risk():
         correlationMatrixMostCorrelated = None
         correlationMatrixLeastCorrelated = None
         portfolio_rolling_vol = None
+        monte_carlo_stress_test = None
 
         totalReturnMetric = None
 
@@ -251,6 +252,7 @@ def risk():
                 correlationMatrix = correlationMatrixData[0].to_json()
                 correlationMatrixMostCorrelated = correlationMatrixData[1]
                 correlationMatrixLeastCorrelated = correlationMatrixData[2]
+                monte_carlo_stress_test=portfolio.stress_test_mc().to_json(orient="split")
 
                 totalReturnMetric = portfolio.portfolio_data_cumsum['Portfolio'].iloc[-1]
 
@@ -301,10 +303,10 @@ def risk():
         # fetched portfolio data comes in the format (teamname, [[TICKER, WEIGHT],[TICKER,WEIGHT]])
 
         if session.get("adminLoggedIn") ==True:
-            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix, correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol)
+            return render_template("risk.html",admin=True, manager_status=manager_status,current_time=time.time(),noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix, correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol,monte_carlo_stress_test=monte_carlo_stress_test)
         
         else:
-            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix,correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol)
+            return render_template("risk.html",admin=False, manager_status=manager_status,current_time=time.time(), noPortfolioError=noPortfolioError,portfolio_name=portfolio_name,portfolio_tickers_and_weights=portfolio_tickers_and_weights,monteCarloData=monteCarloData, correlationMatrixData=correlationMatrix,correlationMatrixMostCorrelated=correlationMatrixMostCorrelated, correlationMatrixLeastCorrelated=correlationMatrixLeastCorrelated,risk_metric_data = risk_metric_data,performanceData=performanceData,histogramData=histogramData,available_team_portfolios=available_team_portfolios,available_user_portfolios= available_user_portfolios,createCustomPortfolioPage=createCustomPortfolioPage, lookback_period=lookback_period, totalReturnMetric=totalReturnMetric,enable_nefs_logo=enable_nefs_logo,portfolio_rolling_vol=portfolio_rolling_vol,monte_carlo_stress_test=monte_carlo_stress_test)
     
     else:
         session.clear()

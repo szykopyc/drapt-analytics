@@ -1,0 +1,66 @@
+Date : 2025-02-20 13:11:12
+Directory : /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version
+Total : 28 files,  2493 codes, 144 comments, 442 blanks, all 3079 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| JavaScript       |         11 |        709 |         22 |         68 |        799 |
+| Python           |          8 |        673 |         58 |        241 |        972 |
+| CSS              |          1 |        536 |         20 |        122 |        678 |
+| HTML             |          5 |        511 |         44 |          8 |        563 |
+| pip requirements |          1 |         40 |          0 |          1 |         41 |
+| CSV              |          1 |         16 |          0 |          0 |         16 |
+| Markdown         |          1 |          8 |          0 |          2 |         10 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                   |         28 |      2,493 |        144 |        442 |      3,079 |
+| . (Files)                                                                                                           |          3 |        398 |         32 |        119 |        549 |
+| dbManagers                                                                                                          |          3 |        190 |          4 |         58 |        252 |
+| design-notes                                                                                                        |          1 |         16 |          0 |          0 |         16 |
+| risks                                                                                                               |          4 |        133 |         22 |         67 |        222 |
+| static                                                                                                              |         12 |      1,245 |         42 |        190 |      1,477 |
+| static/css                                                                                                          |          1 |        536 |         20 |        122 |        678 |
+| static/js                                                                                                           |         11 |        709 |         22 |         68 |        799 |
+| templates                                                                                                           |          5 |        511 |         44 |          8 |        563 |
++---------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                            | language         | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/README.md                                 | Markdown         |          8 |          0 |          2 |         10 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/app.py                                    | Python           |        350 |         32 |        116 |        498 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/__init__.py                    | Python           |          0 |          0 |          1 |          1 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/loginManager.py                | Python           |         71 |          3 |         20 |         94 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/dbManagers/portfolioManager.py            | Python           |        119 |          1 |         37 |        157 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/design-notes/colour-scheme.csv            | CSV              |         16 |          0 |          0 |         16 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/requirements.txt                          | pip requirements |         40 |          0 |          1 |         41 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/__init__.py                         | Python           |          0 |          0 |          2 |          2 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/data_fetcher.py                     | Python           |         21 |          3 |          3 |         27 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/portfolio.py                        | Python           |         75 |          5 |         39 |        119 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/risk_metrics.py                     | Python           |         37 |         14 |         23 |         74 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/css/main.css                       | CSS              |        536 |         20 |        122 |        678 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/confirm-delete.js               | JavaScript       |         22 |          5 |          3 |         30 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/correlation-matrix-figure.js    | JavaScript       |        115 |          0 |          9 |        124 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/cumulative-performance-chart.js | JavaScript       |        108 |          2 |          8 |        118 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/custom-portfolio-table.js       | JavaScript       |        121 |          1 |         20 |        142 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/historical-data-slider.js       | JavaScript       |         10 |          3 |          2 |         15 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/monte-carlo-simulation-chart.js | JavaScript       |        104 |          0 |          9 |        113 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/returns-histogram.js            | JavaScript       |        101 |          4 |          9 |        114 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/rolling-volatility.js           | JavaScript       |         92 |          0 |          3 |         95 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/show-risk-settings.js           | JavaScript       |         19 |          7 |          2 |         28 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/toggle.js                       | JavaScript       |         11 |          0 |          1 |         12 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/warn-screen-size.js             | JavaScript       |          6 |          0 |          2 |          8 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/admin_panel.html                | HTML             |        125 |          0 |          3 |        128 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/create.html                     | HTML             |         59 |          0 |          0 |         59 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/home.html                       | HTML             |         49 |         25 |          2 |         76 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/index.html                      | HTML             |         82 |          3 |          1 |         86 |
+| /Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/risk.html                       | HTML             |        196 |         16 |          2 |        214 |
+| Total                                                                                                               |                  |      2,493 |        144 |        442 |      3,079 |
++---------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

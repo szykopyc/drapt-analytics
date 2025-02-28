@@ -1,40 +1,59 @@
-var parsed_data = JSON.parse(portfolio_rolling_vol);
+var parsed_data = monteCarloStressData;
 
-var rolling30 = parsed_data.data.map(row => row[0] * 100);
-var rolling60 = parsed_data.data.map(row => row[1] * 100);
-var rolling125 = parsed_data.data.map(row => row[2] * 100);
+var parsed_data = JSON.parse(parsed_data);
 
-const ctx5 = document.getElementById('rolling-volatility-chart').getContext('2d');
-new Chart(ctx5, {
+var data = parsed_data["data"];
+var columns = parsed_data["columns"];
+var timestamps = data["index"];
+
+var meanIndex = columns.indexOf('Mean');
+var upperSDIndex = columns.indexOf('UpperSD');
+var lowerSDIndex = columns.indexOf('LowerSD');
+    
+var meanData = data.map(function(row){
+    return row[meanIndex];
+});
+   
+var upperSDData= data.map(function(row){
+    return row[upperSDIndex];
+});
+
+var lowerSDData = data.map(function(row){
+    return row[lowerSDIndex];
+});
+
+
+const ctx6 = document.getElementById('monte-carlo-stress').getContext('2d');
+new Chart(ctx6, {
     type: 'line',
     data: {
         labels: parsed_data['index'],
         datasets: [{
-            label: 'Rolling 30',
-            data: rolling30,
-            borderColor: 'rgba(75, 192, 192, 1)', // Vivid light blue
-            backgroundColor: 'rgba(75, 192, 192, 0.3)', // Slightly more opaque light blue
+            label: 'Mean Simulated Performance',
+            data: meanData,
+            borderColor: '#10263b',
+            backgroundColor: '#10263b',
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
             pointRadius: 0 // Set pointRadius to 0 to hide the points
         },{
-            label: 'Rolling 60',
-            data: rolling60,
-            borderColor: 'rgba(54, 162, 235, 1)', // Slightly deeper blue
-            backgroundColor: 'rgba(54, 162, 235, 0.3)', // Slightly more opaque blue
+            label: '+1 Standard Deviation',
+            data: upperSDData,
+            borderColor: 'rgba(80, 203, 203, 0.2)',
+            backgroundColor: 'rgba(94, 239, 239, 0.2)',
+            fill: false,
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
-            pointRadius: 0, // Set pointRadius to 0 to hide the points
-            hidden: true
+            pointRadius: 0 // Set pointRadius to 0 to hide the points
         },{
-            label: 'Rolling 125',
-            data: rolling125,
-            borderColor: 'rgba(255, 159, 64, 1)', // Orange
-            backgroundColor: 'rgba(255, 159, 64, 0.3)', // Slightly more opaque orange
+            label: '-1 Standard Deviation',
+            data: lowerSDData,
+            borderColor: 'rgba(80, 203, 203, 0.2)',
+            backgroundColor: 'rgba(94, 239, 239, 0.2)',
+            fill: '-1',
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
-            pointRadius: 0, // Set pointRadius to 0 to hide the points
-            hidden: true
+            pointRadius: 0 // Set pointRadius to 0 to hide the points
         }]
     },
     options: {
@@ -43,15 +62,16 @@ new Chart(ctx5, {
         plugins: {
             title: {
                 display: true,
-                
-                color: "#2f4f4f",
+                text: 'Monte Carlo Simulated Portfolio Value',
+                color: '#2f4f4f',
                 font:{
                     weight: 'bold'
                 }
             },
+
             legend: {
                 labels: {
-                    color: "#2f4f4f", // Color for the legend text
+                    color: '#2f4f4f', // Color for the legend text
                 }
             },
             tooltip: {
@@ -60,7 +80,7 @@ new Chart(ctx5, {
                 mode: 'nearest', // Show tooltip for the nearest point
                 callbacks: {
                     label: function(tooltipItem) {
-                        return tooltipItem.raw.toFixed(2) + '%'; // Format tooltip data as percentage
+                        return tooltipItem.raw.toFixed(2); // Format tooltip data as percentage
                     }
                 }
             }
@@ -68,10 +88,7 @@ new Chart(ctx5, {
         scales: {
             y: {
                 ticks: {
-                    color: "#2f4f4f", // Color for Y-axis ticks
-                    callback: function(value) {
-                        return value.toFixed(1) + '%'; // Round to 1 decimal place and append '%'
-                    }
+                    color: '#2f4f4f', // Color for Y-axis ticks
                 },
                 grid: {
                     color: "rgba(47,79,79,0.1)"
@@ -80,7 +97,6 @@ new Chart(ctx5, {
             x: {
                 ticks: {
                     color: "#2f4f4f", // Color for X-axis ticks
-                    maxTicksLimit: 10
                 },
                 grid: {
                     color: "rgba(47,79,79,0.1)"
@@ -88,7 +104,7 @@ new Chart(ctx5, {
             }
         },
         animation: {
-            duration: 300,  // Reduce animation duration (default is 1000ms)
+            duration: 500,  // Reduce animation duration (default is 1000ms)
             easing: 'linear', // Use a linear easing function for less complex animation
             animateScale: true,  // Optionally reduce scale animations
             animateRotate: true  // Optionally reduce rotate animations

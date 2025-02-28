@@ -1,0 +1,12 @@
+"filename", "language", "Python", "HTML", "CSS", "JavaScript", "comment", "blank", "total"
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/app.py", "Python", 53, 0, 0, 0, 14, 21, 88
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/data_fetcher.py", "Python", 2, 0, 0, 0, 1, 0, 3
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/portfolio.py", "Python", 22, 0, 0, 0, 5, 14, 41
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/risks/risk_metrics.py", "Python", 7, 0, 0, 0, 5, 9, 21
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/css/main.css", "CSS", 0, 0, 20, 0, 0, 5, 25
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/static/js/rolling-volatility.js", "JavaScript", 0, 0, 0, 92, 0, 3, 95
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/create.html", "HTML", 0, -2, 0, 0, 0, 0, -2
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/home.html", "HTML", 0, -28, 0, 0, 25, -1, -4
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/index.html", "HTML", 0, -2, 0, 0, 3, 0, 1
+"/Users/szymonkopycinski/Documents/Programming/Python/Drapty/Flask Version/templates/risk.html", "HTML", 0, 10, 0, 0, 15, 1, 26
+"Total", "-", 84, -22, 20, 92, 68, 52, 294

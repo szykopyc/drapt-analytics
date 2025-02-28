@@ -32,7 +32,7 @@ header nav {
     align-items: center;
     gap: 20px;
 
-    padding: 15px 25px;
+    padding: 5px 25px;
 }
 
 .nav-logo {
@@ -78,8 +78,8 @@ header nav li a:hover {
 
 .main-flex-container {
     background: #fafafa;
-    min-height: 96.2vh;
-    padding-top: 100px;
+    min-height: 96.3vh;
+    padding-top: 144px;
     color: #2f4f4f;
     display: flex;
     justify-content: center;

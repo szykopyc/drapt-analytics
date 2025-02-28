@@ -37,8 +37,6 @@ class Portfolio:
 
 
         self.portfolio_data_cumsum = self.portfolio_data.cumsum()
-        with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
-            print(self.portfolio_data)
 
         self.portfolio_data_cumsum.index =  self.portfolio_data_cumsum.index
 
@@ -88,8 +86,6 @@ class Portfolio:
             return float('inf') if excess_return > 0 else float('-inf')
 
         sortino_ratio = excess_return / annual_downside_deviation  # No sqrt(252) needed
-        print("Sortino ratio")
-        print(sortino_ratio)
         return sortino_ratio
 
         
@@ -115,4 +111,9 @@ class Portfolio:
         rolling_volatility.columns = ['Rolling 30', 'Rolling 60', 'Rolling 125']
         
         return rolling_volatility
+    
+    def stress_test_mc(self):
+        weights = [weight for _, weight in self.tickers_and_weights]
+        stressed_portfolio_data = risk_metrics.monte_carlo_stress_test(self.portfolio_data.drop('Portfolio',axis=1), weights=weights)
+        return stressed_portfolio_data
 
