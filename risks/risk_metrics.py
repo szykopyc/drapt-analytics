@@ -4,7 +4,6 @@ import json
 from datetime import datetime, timedelta
 from scipy.stats import t, norm
 from scipy.stats import multivariate_normal
-from sklearn.cluster import KMeans
 
 def calculate_var(returns, confidence_level=0.95):
     # Historical VaR
