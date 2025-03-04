@@ -124,13 +124,15 @@
                     {{ i[0] }} - {{ (i[1] | float * 100) | round(2) }}%{% if not loop.last %}, {% endif %}
                 {% endfor %}
             </p>-->
-            {% if monteCarloData%}
+            {% if monteCarloData == True %}
+            <!--
             <div class="element-risk-chart">
                 <div class="element-risk-tool">
                     <h1>Monte Carlo (GBM)</h1>
                     <canvas id="monte-carlo-simulation-chart"></canvas>
                 </div>
             </div>
+            -->
             <div class="element-risk-chart">
                 <div class="element-risk-tool">
                     <h1>Asset Correlation Matrix</h1>

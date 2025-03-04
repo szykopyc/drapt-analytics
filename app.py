@@ -239,13 +239,19 @@ def risk():
 
                 risk_metric_data = [portfolio_volatility_daily,portfolio_volatility_weekly,portfolio_volatility_monthly, jensenAlpha,portfolio_beta, portfolio_sharpe, portfolio_var95, portfolio_var99, portfolio_skewness, portfolio_sortino]
 
+                '''
                 if enable_monte_carlo_sim:
                     monteCarloSimulation = portfolio.simulate_monte_carlo(num_simulations=10000, lookahead_days=120, initial_value=100)
                     
                     monteCarloData = monteCarloSimulation.to_json(orient="split")
                 else:
                     monteCarloData = None
+                '''
+                if enable_monte_carlo_sim:
+                    monteCarloData=True
 
+                else:
+                    monteCarloData=False
                 performanceData = portfolio.portfolio_data_cumsum.to_json(orient="split")
                 histogramData = portfolio.portfolio_data.to_json(orient="split")
                 correlationMatrixData = portfolio.compute_correlation_matrix()
