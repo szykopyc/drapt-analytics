@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}"">
-    <title>Home | Drap Analytics</title>
+    <title>Home | Drapt Analytics</title>
 </head>
 <body>
     <header>
         <nav>
             {% if enable_nefs_logo == True %}<img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt="">{% endif %}
-            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/DRAP-T_logo_wide.png') }}" alt=""></a>
+            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/Drapt Analytics Logo.png') }}" alt=""></a>
             <ul>
                 <li><a href="{{url_for('risk')}}">RISK</a></li>
                 <li><a href="{{url_for('performance')}}">PERF</a></li>
@@ -25,23 +25,23 @@
 
     <div class="main-flex-container">
         <div class="element-container" id="intro-container">
-            <h1>Welcome to <b>Drap Analytics</b></h1>
+            <h1>Welcome to <b>Drapt Analytics</b></h1>
             <p><i>Dynamic Risk Analysis & Performance</i></p>
-            <p>In today’s fast-paced financial landscape, precision and efficiency in portfolio management are paramount. Drap Analytics empowers investors, analysts, and fund managers with cutting-edge risk analysis and performance evaluation tools, transforming raw data into actionable insights.</p>
+            <p>In today’s fast-paced financial landscape, precision and efficiency in portfolio management are paramount. Drapt Analytics empowers investors, analysts, and fund managers with cutting-edge risk analysis and performance evaluation tools, transforming raw data into actionable insights.</p>
         </div>
         
         <div class="element-container">
-            <h2>Why Drap Analytics?</h2>
+            <h2>Why Drapt Analytics?</h2>
             <ul>
                 <li>Comprehensive Risk Analysis – From correlation matrices to Value at Risk (VaR), we provide deep insights into portfolio vulnerabilities.</li>
                 <li>Seamless Portfolio Integration – Track and optimize portfolio allocation with real-time data analysis.</li>
-                <li>Institutional-Grade Insights – Developed for the University of Nottingham NEFS Investment Fund, Drap Analytics is designed to meet the demands of professional fund management.</li>
+                <li>Institutional-Grade Insights – Developed for the University of Nottingham NEFS Investment Fund, Drapt Analytics is designed to meet the demands of professional fund management.</li>
             </ul>
         </div>
         <div class="element-container">
             <h2>Powering Smarter Portfolio Management Decisions</h2>
-            <p>Whether you’re managing a fund or refining your personal portfolio, Drap Analytics delivers the analytical depth you need to stay ahead in volatile markets.</p>
-            <p>Explore the future of risk and performance analysis. Welcome to Drap Analytics.</p>
+            <p>Whether you’re managing a fund or refining your personal portfolio, Drapt Analytics delivers the analytical depth you need to stay ahead in volatile markets.</p>
+            <p>Explore the future of risk and performance analysis. Welcome to Drapt Analytics.</p>
             <!--
             <div class="element-image" id="image-right">
                 <div class="element-paragraph-container-column">

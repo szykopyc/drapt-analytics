@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{ current_time }}">
-    <title>Risk | Drap Analytics</title>
+    <title>Risk | Drapt Analytics</title>
     <script src="{{ url_for('static', filename='js/confirm-delete.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/warn-screen-size.js') }}" defer></script>
     <script src="{{ url_for('static', filename='js/monte-carlo-simulation-chart.js') }}" defer></script>
@@ -24,7 +24,7 @@
     <header>
         <nav>
             {% if enable_nefs_logo == True %}<img class="nav-logo" src="{{ url_for('static', filename='images/NEFSIF_NAV_LOGO.png') }}" alt="">{% endif %}
-            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/DRAP-T_logo_wide.png') }}" alt=""></a>
+            <a href="{{ url_for('home') }}"><img class="nav-logo" src="{{ url_for('static', filename='images/Drapt Analytics Logo.png') }}" alt=""></a>
             <ul>
                 <li><a href="{{ url_for('risk') }}">RISK</a></li>
                 <li><a href="{{ url_for('performance') }}">PERF</a></li>
